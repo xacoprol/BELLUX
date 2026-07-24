@@ -1,0 +1,150 @@
+export type Locale = "pt" | "es" | "en";
+
+export type Milestone = {
+  year: string;
+  title: string;
+  lines: string[];
+  tag?: string;
+};
+
+export type Show = {
+  year: string;
+  title: string;
+};
+
+export type RecentPartner = {
+  year: string;
+  name: string;
+  place: string;
+  detail: string;
+};
+
+export type Strength = {
+  icon: string;
+  title: string;
+  text: string;
+};
+
+export type Project = {
+  cls: string;
+  cat: string;
+  label: string;
+  tall?: boolean;
+};
+
+export type SiteContent = {
+  meta: {
+    title: string;
+    description: string;
+  };
+  nav: {
+    about: string;
+    services: string;
+    projects: string;
+    contact: string;
+    quote: string;
+    menuOpen: string;
+    menuClose: string;
+  };
+  hero: {
+    eyebrow: string;
+    titleLine1: string;
+    titleLine2: string;
+    titleLine3: string;
+    subtitle: string;
+    ctaPrimary: string;
+    ctaSecondary: string;
+    scroll: string;
+    trust: string;
+  };
+  marquee: string[];
+  stats: { num: string; lbl: string }[];
+  about: {
+    eyebrow: string;
+    titleLine1: string;
+    titleEm: string;
+    intro: string[];
+    highlights: string[];
+    hotels: {
+      title: string;
+      paragraphs: string[];
+      partnersLabel: string;
+      partners: string[];
+      recentLabel: string;
+      recent: RecentPartner[];
+    };
+    timelineLabel: string;
+    journeyTitle: string;
+    milestones: Milestone[];
+    showsLabel: string;
+    showsSubtitle: string;
+    shows: Show[];
+    strengthsLabel: string;
+    strengths: Strength[];
+    audiencesLabel: string;
+    audiences: string[];
+    corporateIntro: string;
+    closingQuote: string;
+    closing: string;
+    years: string;
+  };
+  services: {
+    eyebrow: string;
+    titleLine1: string;
+    titleEm: string;
+    intro: string;
+    items: { icon: string; title: string; description: string; featured?: boolean }[];
+  };
+  clients: {
+    eyebrow: string;
+    title: string;
+    titleEm: string;
+    items: string[];
+  };
+  testimonials: {
+    eyebrow: string;
+    titleLine1: string;
+    titleEm: string;
+    items: { quote: string; who: string }[];
+    note: string;
+  };
+  projects: {
+    eyebrow: string;
+    titleLine1: string;
+    titleEm: string;
+    intro: string;
+    items: Project[];
+  };
+  contact: {
+    eyebrow: string;
+    titleLine1: string;
+    titleEm: string;
+    intro: string;
+    name: string;
+    email: string;
+    phone: string;
+    eventType: string;
+    details: string;
+    submit: string;
+    whatsappEyebrow: string;
+    whatsappIntro: string;
+    whatsappCta: string;
+    eventTypes: string[];
+  };
+  footer: {
+    copy: string;
+    note: string;
+  };
+  ui: {
+    readMore: string;
+    readLess: string;
+    viewStory: string;
+    hideStory: string;
+    viewService: string;
+    hideService: string;
+    moreReviews: string;
+    lessReviews: string;
+    viewProjectInfo: string;
+    hideProjectInfo: string;
+  };
+};
