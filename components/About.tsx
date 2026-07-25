@@ -7,7 +7,7 @@ export default function About() {
   const { about } = t;
 
   return (
-    <section className="about" id="sobre">
+    <section className="about">
       <div className="wrap about-grid">
         <div className="about-text" data-r>
           <p className="eyebrow">{about.eyebrow}</p>

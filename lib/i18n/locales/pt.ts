@@ -44,6 +44,14 @@ export const pt: SiteContent = {
     { num: "Algarve", lbl: "Presença hoteleira" },
     { num: "★★★★★", lbl: "Tripadvisor" },
   ],
+  manifesto: {
+    before: "Da ideia ao palco, criamos momentos artísticos que",
+    accent1: "despertam emoção,",
+    accent2: "constroem memória",
+    mid: "e transformam públicos em",
+    accent3: "comunidades.",
+    sub: "Unimos criatividade, profissionalismo e excelência — do hotel ao grande palco, em Portugal e Espanha.",
+  },
   about: {
     eyebrow: "Sobre nós",
     titleLine1: "Experiências artísticas",
@@ -186,38 +194,74 @@ export const pt: SiteContent = {
     titleEm: "cada tipo de evento",
     intro:
       "Do dia a dia no hotel ao grande espetáculo — escolha o formato e nós tratamos de tudo, da conceção à última cortina.",
+    learnMore: "Saber mais",
+    prev: "Anterior",
+    next: "Seguinte",
     items: [
       {
-        icon: "🎪",
-        title: "Animação turística",
-        description:
-          "Programas diários para hotéis e resorts. O nosso origem e o nosso selo.",
-        featured: true,
+        tag: "PARA HOTÉIS",
+        lines: [
+          [{ text: "ANIMAÇÃO" }],
+          [{ text: "TURÍSTICA", accent: "cyan" }],
+          [{ text: "QUE MARCA" }],
+          [{ text: "A ESTADIA", accent: "magenta" }],
+        ],
+        image:
+          "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1200&q=80",
       },
       {
-        icon: "🪂",
-        title: "Espetáculos aéreos",
-        description: "Acrobacias e coreografias que elevam qualquer espaço.",
+        tag: "PARA EVENTOS",
+        lines: [
+          [{ text: "ESPETÁCULOS" }],
+          [{ text: "AÉREOS", accent: "yellow" }],
+          [{ text: "QUE ELEVAM" }],
+          [{ text: "O PALCO", accent: "cyan" }],
+        ],
+        image:
+          "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=1200&q=80",
       },
       {
-        icon: "🎭",
-        title: "Circo",
-        description: "Números para todas as idades, ideais para famílias.",
+        tag: "PARA FAMÍLIAS",
+        lines: [
+          [{ text: "CIRCO" }],
+          [{ text: "PARA TODAS", accent: "magenta" }],
+          [{ text: "AS IDADES", accent: "yellow" }],
+        ],
+        image:
+          "https://images.unsplash.com/photo-1503095396549-807759245b35?auto=format&fit=crop&w=1200&q=80",
       },
       {
-        icon: "🎄",
-        title: "Natal & temáticos",
-        description: "Produções sazonais e shows temáticos sob medida.",
+        tag: "PARA ÉPOCA",
+        lines: [
+          [{ text: "NATAL &" }],
+          [{ text: "SHOWS", accent: "cyan" }],
+          [{ text: "TEMÁTICOS", accent: "magenta" }],
+          [{ text: "SOB MEDIDA" }],
+        ],
+        image:
+          "https://images.unsplash.com/photo-1482517969863-f23c920ce9ca?auto=format&fit=crop&w=1200&q=80",
       },
       {
-        icon: "🎶",
-        title: "Teatro, Dança & Música",
-        description: "Produções ao vivo para todo o tipo de público.",
+        tag: "PARA PALCO",
+        lines: [
+          [{ text: "TEATRO," }],
+          [{ text: "DANÇA", accent: "yellow" }],
+          [{ text: "& MÚSICA", accent: "cyan" }],
+          [{ text: "AO VIVO" }],
+        ],
+        image:
+          "https://images.unsplash.com/photo-1507676184212-d03ab07a01bf?auto=format&fit=crop&w=1200&q=80",
       },
       {
-        icon: "🎉",
-        title: "Grandes eventos",
-        description: "Produção integral para municípios e empresas.",
+        tag: "PARA MARCAS",
+        lines: [
+          [{ text: "GRANDES" }],
+          [{ text: "EVENTOS", accent: "magenta" }],
+          [{ text: "COM PRODUÇÃO" }],
+          [{ text: "INTEGRAL", accent: "yellow" }],
+        ],
+        image:
+          "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=1200&q=80",
       },
     ],
   },
@@ -256,17 +300,58 @@ export const pt: SiteContent = {
     titleEm: "onde já estivemos",
     intro:
       "Uma amostra dos contextos em que a Bellux leva o espetáculo — de resorts do Algarve a grandes produções de Natal.",
+    headlineBefore: "Do hotel ao",
+    accent1: "grande palco,",
+    mid: "de animações a",
+    accent2: "grandes produções.",
+    sub: "Transformamos ideias em momentos de que as pessoas falam — e de que se lembram.",
+    cta: "Ver projetos",
     items: [
       {
-        cls: "pt1",
-        cat: "Hotel & Resort",
-        label: "Animação turística no Algarve",
-        tall: true,
+        tag: "HOTÉIS",
+        title: "ANIMAÇÃO TURÍSTICA NO ALGARVE",
+        description:
+          "Programas diários em resorts de referência — Yellow Hotels, Martinhal, Conforhoteis e mais.",
+        image:
+          "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1600&q=80",
+        accent: "cyan",
       },
-      { cls: "pt2", cat: "Natal de Portimão", label: "Um Sonho de Natal" },
-      { cls: "pt3", cat: "2021 · Lisboa", label: "Cabaret 360" },
-      { cls: "pt4", cat: "Garrafeira Soares", label: "Eventos corporativos" },
-      { cls: "pt5", cat: "Espanha", label: "Desfiles de Reis Magos" },
+      {
+        tag: "NATAL",
+        title: "UM SONHO DE NATAL · PORTIMÃO",
+        description:
+          "Produção integral do Natal de Portimão — espetáculo, emoção e escala municipal.",
+        image:
+          "https://images.unsplash.com/photo-1482517969863-f23c920ce9ca?auto=format&fit=crop&w=1600&q=80",
+        accent: "magenta",
+      },
+      {
+        tag: "PALCO",
+        title: "CABARET 360 · LISBOA",
+        description:
+          "Uma experiência imersiva em Lisboa que uniu teatro, música e direção artística.",
+        image:
+          "https://images.unsplash.com/photo-1507676184212-d03ab07a01bf?auto=format&fit=crop&w=1600&q=80",
+        accent: "yellow",
+      },
+      {
+        tag: "CORPORATE",
+        title: "EVENTOS GARRAFEIRA SOARES",
+        description:
+          "Produção de eventos corporativos com o mesmo rigor artístico do grande espetáculo.",
+        image:
+          "https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&w=1600&q=80",
+        accent: "cyan",
+      },
+      {
+        tag: "ESPANHA",
+        title: "DESFILES DE REIS MAGOS",
+        description:
+          "Desfiles e animações de Reis Magos em Espanha — tradição, escala e impacto visual.",
+        image:
+          "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=1600&q=80",
+        accent: "magenta",
+      },
     ],
   },
   contact: {

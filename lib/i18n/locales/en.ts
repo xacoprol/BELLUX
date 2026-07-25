@@ -44,6 +44,14 @@ export const en: SiteContent = {
     { num: "Algarve", lbl: "Hotel presence" },
     { num: "★★★★★", lbl: "Tripadvisor" },
   ],
+  manifesto: {
+    before: "From idea to stage, we create artistic moments that",
+    accent1: "spark emotion,",
+    accent2: "build memory",
+    mid: "and turn audiences into",
+    accent3: "communities.",
+    sub: "We combine creativity, professionalism, and excellence — from hotels to major stages, across Portugal and Spain.",
+  },
   about: {
     eyebrow: "About us",
     titleLine1: "Memorable artistic",
@@ -186,38 +194,74 @@ export const en: SiteContent = {
     titleEm: "every kind of event",
     intro:
       "From daily hotel entertainment to large-scale shows — pick the format and we handle everything, from concept to curtain call.",
+    learnMore: "Learn more",
+    prev: "Previous",
+    next: "Next",
     items: [
       {
-        icon: "🎪",
-        title: "Hotel entertainment",
-        description:
-          "Daily programmes for hotels and resorts. Our origin and our signature.",
-        featured: true,
+        tag: "FOR HOTELS",
+        lines: [
+          [{ text: "HOTEL" }],
+          [{ text: "ENTERTAINMENT", accent: "cyan" }],
+          [{ text: "THAT MARKS" }],
+          [{ text: "THE STAY", accent: "magenta" }],
+        ],
+        image:
+          "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1200&q=80",
       },
       {
-        icon: "🪂",
-        title: "Aerial shows",
-        description: "Acrobatics and choreography that elevate any space.",
+        tag: "FOR EVENTS",
+        lines: [
+          [{ text: "AERIAL" }],
+          [{ text: "SHOWS", accent: "yellow" }],
+          [{ text: "THAT LIFT" }],
+          [{ text: "THE STAGE", accent: "cyan" }],
+        ],
+        image:
+          "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=1200&q=80",
       },
       {
-        icon: "🎭",
-        title: "Circus",
-        description: "Acts for all ages, ideal for family events.",
+        tag: "FOR FAMILIES",
+        lines: [
+          [{ text: "CIRCUS" }],
+          [{ text: "FOR ALL", accent: "magenta" }],
+          [{ text: "AGES", accent: "yellow" }],
+        ],
+        image:
+          "https://images.unsplash.com/photo-1503095396549-807759245b35?auto=format&fit=crop&w=1200&q=80",
       },
       {
-        icon: "🎄",
-        title: "Christmas & themed",
-        description: "Seasonal productions and bespoke themed shows.",
+        tag: "FOR SEASON",
+        lines: [
+          [{ text: "CHRISTMAS &" }],
+          [{ text: "THEMED", accent: "cyan" }],
+          [{ text: "SHOWS", accent: "magenta" }],
+          [{ text: "TAILORED" }],
+        ],
+        image:
+          "https://images.unsplash.com/photo-1482517969863-f23c920ce9ca?auto=format&fit=crop&w=1200&q=80",
       },
       {
-        icon: "🎶",
-        title: "Theatre, Dance & Music",
-        description: "Live productions for every audience and venue.",
+        tag: "FOR STAGE",
+        lines: [
+          [{ text: "THEATRE," }],
+          [{ text: "DANCE", accent: "yellow" }],
+          [{ text: "& MUSIC", accent: "cyan" }],
+          [{ text: "LIVE" }],
+        ],
+        image:
+          "https://images.unsplash.com/photo-1507676184212-d03ab07a01bf?auto=format&fit=crop&w=1200&q=80",
       },
       {
-        icon: "🎉",
-        title: "Large-scale events",
-        description: "End-to-end production for municipalities and companies.",
+        tag: "FOR BRANDS",
+        lines: [
+          [{ text: "LARGE-SCALE" }],
+          [{ text: "EVENTS", accent: "magenta" }],
+          [{ text: "WITH FULL" }],
+          [{ text: "PRODUCTION", accent: "yellow" }],
+        ],
+        image:
+          "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=1200&q=80",
       },
     ],
   },
@@ -256,17 +300,58 @@ export const en: SiteContent = {
     titleEm: "already graced",
     intro:
       "A glimpse of the settings where Bellux brings entertainment to life — from Algarve resorts to major Christmas productions.",
+    headlineBefore: "From hotels to",
+    accent1: "the big stage,",
+    mid: "from shows to",
+    accent2: "large-scale productions.",
+    sub: "We turn ideas into moments people actually talk about — and remember.",
+    cta: "View our work",
     items: [
       {
-        cls: "pt1",
-        cat: "Hotel & Resort",
-        label: "Hotel entertainment in the Algarve",
-        tall: true,
+        tag: "HOTELS",
+        title: "HOTEL ENTERTAINMENT IN THE ALGARVE",
+        description:
+          "Daily programmes at leading resorts — Yellow Hotels, Martinhal, Conforhoteis and more.",
+        image:
+          "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1600&q=80",
+        accent: "cyan",
       },
-      { cls: "pt2", cat: "Portimão Christmas", label: "A Christmas Dream" },
-      { cls: "pt3", cat: "2021 · Lisbon", label: "Cabaret 360" },
-      { cls: "pt4", cat: "Garrafeira Soares", label: "Corporate events" },
-      { cls: "pt5", cat: "Spain", label: "Three Kings Parades" },
+      {
+        tag: "CHRISTMAS",
+        title: "A CHRISTMAS DREAM · PORTIMÃO",
+        description:
+          "Full production of Portimão Christmas — spectacle, emotion and city-scale impact.",
+        image:
+          "https://images.unsplash.com/photo-1482517969863-f23c920ce9ca?auto=format&fit=crop&w=1600&q=80",
+        accent: "magenta",
+      },
+      {
+        tag: "STAGE",
+        title: "CABARET 360 · LISBON",
+        description:
+          "An immersive Lisbon experience bringing together theatre, music and artistic direction.",
+        image:
+          "https://images.unsplash.com/photo-1507676184212-d03ab07a01bf?auto=format&fit=crop&w=1600&q=80",
+        accent: "yellow",
+      },
+      {
+        tag: "CORPORATE",
+        title: "GARRAFEIRA SOARES EVENTS",
+        description:
+          "Corporate event production with the same artistic rigor as a full-scale show.",
+        image:
+          "https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&w=1600&q=80",
+        accent: "cyan",
+      },
+      {
+        tag: "SPAIN",
+        title: "THREE KINGS PARADES",
+        description:
+          "Three Kings parades and entertainment across Spain — tradition, scale and visual impact.",
+        image:
+          "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=1600&q=80",
+        accent: "magenta",
+      },
     ],
   },
   contact: {

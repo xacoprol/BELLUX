@@ -1,29 +1,21 @@
 import type { Metadata } from "next";
-import { Barlow_Condensed, Cormorant_Garamond, Montserrat } from "next/font/google";
+import { Boldonse, Inter } from "next/font/google";
 import { LanguageProvider } from "@/context/LanguageContext";
 import "./globals.css";
 import PageEffects from "@/components/PageEffects";
 
-const cormorant = Cormorant_Garamond({
+const inter = Inter({
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
-  style: ["normal", "italic"],
-  variable: "--font-serif",
-  display: "swap",
-});
-
-const montserrat = Montserrat({
-  subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
   variable: "--font-sans",
   display: "swap",
 });
 
-const barlowCondensed = Barlow_Condensed({
+const boldonse = Boldonse({
   subsets: ["latin"],
-  weight: ["500", "600", "700", "800"],
-  variable: "--font-condensed",
+  weight: "400",
+  variable: "--font-display",
   display: "swap",
+  adjustFontFallback: false,
 });
 
 export const metadata: Metadata = {
@@ -40,7 +32,7 @@ export default function RootLayout({
   return (
     <html
       lang="pt"
-      className={`${cormorant.variable} ${montserrat.variable} ${barlowCondensed.variable}`}
+      className={`${inter.variable} ${boldonse.variable}`}
       suppressHydrationWarning
     >
       <body>

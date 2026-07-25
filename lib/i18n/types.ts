@@ -26,10 +26,11 @@ export type Strength = {
 };
 
 export type Project = {
-  cls: string;
-  cat: string;
-  label: string;
-  tall?: boolean;
+  tag: string;
+  title: string;
+  description: string;
+  image: string;
+  accent?: "cyan" | "magenta" | "yellow";
 };
 
 export type SiteContent = {
@@ -59,6 +60,14 @@ export type SiteContent = {
   };
   marquee: string[];
   stats: { num: string; lbl: string }[];
+  manifesto: {
+    before: string;
+    accent1: string;
+    accent2: string;
+    mid: string;
+    accent3: string;
+    sub: string;
+  };
   about: {
     eyebrow: string;
     titleLine1: string;
@@ -93,7 +102,14 @@ export type SiteContent = {
     titleLine1: string;
     titleEm: string;
     intro: string;
-    items: { icon: string; title: string; description: string; featured?: boolean }[];
+    learnMore: string;
+    prev: string;
+    next: string;
+    items: {
+      tag: string;
+      lines: { text: string; accent?: "cyan" | "magenta" | "yellow" }[][];
+      image: string;
+    }[];
   };
   clients: {
     eyebrow: string;
@@ -113,6 +129,12 @@ export type SiteContent = {
     titleLine1: string;
     titleEm: string;
     intro: string;
+    headlineBefore: string;
+    accent1: string;
+    mid: string;
+    accent2: string;
+    sub: string;
+    cta: string;
     items: Project[];
   };
   contact: {

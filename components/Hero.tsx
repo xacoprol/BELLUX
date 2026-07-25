@@ -1,14 +1,17 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { useLanguage } from "@/context/LanguageContext";
 import { localeLabels, locales } from "@/lib/i18n/content";
 import type { Locale } from "@/lib/i18n/types";
+import { wpMedia } from "@/lib/wp";
+import Logo from "./Logo";
 
 export default function Hero() {
   const { locale, setLocale, t } = useLanguage();
   const [menuOpen, setMenuOpen] = useState(false);
+  const videoRef = useRef<HTMLVideoElement>(null);
 
   const navLinks = [
     { href: "#sobre", label: t.nav.about },
@@ -24,17 +27,43 @@ export default function Hero() {
 
   const closeMenu = () => setMenuOpen(false);
 
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const syncMotion = () => {
+      if (mq.matches) {
+        video.pause();
+      } else {
+        void video.play().catch(() => {});
+      }
+    };
+
+    syncMotion();
+    mq.addEventListener("change", syncMotion);
+    return () => mq.removeEventListener("change", syncMotion);
+  }, []);
+
   return (
     <section className="hero" id="inicio">
       <div className="hero-media" aria-hidden="true">
-        <div className="hero-media-img" />
+        <video
+          ref={videoRef}
+          className="hero-media-video"
+          src={wpMedia.heroVideo}
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="metadata"
+        />
+        <div className="hero-media-fallback" />
         <div className="hero-media-overlay" />
       </div>
 
       <header className="hero-nav" id="hdr">
-        <Link href="#inicio" className="hero-brand">
-          BELLUX
-        </Link>
+        <Logo className="logo--nav" priority />
 
         <nav className="hero-nav-pill" aria-label="Primary">
           {navLinks.map((link) => (
