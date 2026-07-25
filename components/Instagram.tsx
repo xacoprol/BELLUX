@@ -22,16 +22,27 @@ export default function Instagram({
   return (
     <section className="instagram" id="instagram" aria-labelledby="ig-title">
       <div className="wrap ig-head">
-        <p className="ig-follow" aria-hidden="true">
-          <span>{followLoop}</span>
-        </p>
+        <div className="ig-head-copy">
+          <p className="ig-follow" aria-hidden="true">
+            <span>{followLoop}</span>
+          </p>
 
-        <h2 id="ig-title" className="ig-title">
-          {ig.before}{" "}
-          <span className="ig-accent">{ig.accent}</span> {ig.after}
-        </h2>
+          <h2 id="ig-title" className="ig-title">
+            {ig.before}{" "}
+            <span className="ig-accent">{ig.accent}</span> {ig.after}
+          </h2>
 
-        <p className="ig-sub">{ig.sub}</p>
+          <p className="ig-sub">{ig.sub}</p>
+        </div>
+
+        <a
+          href={PROFILE}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="ig-profile"
+        >
+          {ig.cta}
+        </a>
       </div>
 
       <div className="ig-rail-wrap">
@@ -63,17 +74,6 @@ export default function Instagram({
             </div>
           ))}
         </div>
-      </div>
-
-      <div className="wrap ig-foot">
-        <a
-          href={PROFILE}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="ig-profile"
-        >
-          {ig.cta}
-        </a>
       </div>
     </section>
   );

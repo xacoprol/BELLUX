@@ -6,28 +6,31 @@ export default function Testimonials() {
   const { t } = useLanguage();
 
   return (
-    <section className="testimonials">
-      <div className="wrap">
-        <p className="eyebrow center" data-r>
-          {t.testimonials.eyebrow}
-        </p>
-        <div className="rule" />
-        <h2 className="title center" data-r>
-          {t.testimonials.titleLine1}
-          <br />
-          <em>{t.testimonials.titleEm}</em>
+    <section className="testimonials" id="valoraciones">
+      <div className="testimonials-head">
+        <p className="testimonials-eyebrow">{t.testimonials.eyebrow}</p>
+        <h2 className="testimonials-title">
+          {t.testimonials.titleLine1}{" "}
+          <span>{t.testimonials.titleEm}</span>
         </h2>
-        <div className="test-grid">
-          {t.testimonials.items.map((item) => (
-            <div key={item.quote} className="tcard" data-r>
-              <p>&ldquo;{item.quote}&rdquo;</p>
-              <div className="tcard-who">— {item.who}</div>
-              <div className="tcard-stars">★★★★★</div>
-            </div>
-          ))}
-        </div>
-        <p className="ta-note">{t.testimonials.note}</p>
       </div>
+
+      <div className="testimonials-grid">
+        {t.testimonials.items.map((item, i) => (
+          <article
+            key={item.quote}
+            className={`tcard tcard--${(["cyan", "magenta", "yellow"] as const)[i % 3]}`}
+          >
+            <div className="tcard-stars" aria-label="5">
+              ★★★★★
+            </div>
+            <p className="tcard-quote">&ldquo;{item.quote}&rdquo;</p>
+            <p className="tcard-who">{item.who}</p>
+          </article>
+        ))}
+      </div>
+
+      <p className="testimonials-note">{t.testimonials.note}</p>
     </section>
   );
 }

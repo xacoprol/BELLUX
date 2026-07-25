@@ -15,7 +15,6 @@ export default function Home() {
         <Manifesto />
         <Services />
         <Projects />
-        <div className="s-rule" />
         <Testimonials />
         <InstagramSection />
         <Contact />
