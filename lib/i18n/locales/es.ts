@@ -21,7 +21,7 @@ export const es: SiteContent = {
     titleLine2: "merece su propio",
     titleLine3: "escenario",
     subtitle:
-      "Hoteles · Teatro · Danza · Música · Circo · Aéreos\nAlgarve · Portugal & España",
+      "Producción artística y entretenimiento en vivo para eventos que marcan.",
     ctaPrimary: "Pedir presupuesto",
     ctaSecondary: "Descubrir servicios",
     scroll: "Scroll",
@@ -50,7 +50,7 @@ export const es: SiteContent = {
     accent2: "construyen memoria",
     mid: "y transforman públicos en",
     accent3: "comunidades.",
-    sub: "Combinamos creatividad, profesionalidad y excelencia — del hotel al gran escenario, en Portugal y España.",
+    sub: "Combinamos creatividad, profesionalidad y excelencia en cada producción — en Portugal y España.",
   },
   about: {
     eyebrow: "Sobre nosotros",
@@ -58,7 +58,7 @@ export const es: SiteContent = {
     titleEm: "memorables",
     intro: [
       "Con más de 15 años de experiencia en animación, entretenimiento y producción de espectáculos, Bellux es referencia en la creación de momentos que permanecen en la memoria.",
-      "Combinamos creatividad, profesionalidad y excelencia — del hotel al gran escenario, en Portugal y España.",
+      "Combinamos creatividad, profesionalidad y excelencia en cada producción — en Portugal y España.",
     ],
     highlights: ["Creatividad", "Profesionalidad", "Excelencia artística"],
     hotels: {
@@ -193,7 +193,7 @@ export const es: SiteContent = {
     titleLine1: "Un repertorio para",
     titleEm: "cada tipo de evento",
     intro:
-      "Del día a día en el hotel al gran espectáculo — elige el formato y nosotros nos encargamos de todo, de la idea al final del show.",
+      "Elige el formato y nosotros nos encargamos de todo — de la idea al final del show.",
     learnMore: "Saber más",
     prev: "Anterior",
     next: "Siguiente",
@@ -294,16 +294,24 @@ export const es: SiteContent = {
     ],
     note: "Reseñas de ejemplo — las reales se integrarán desde Tripadvisor.",
   },
+  instagram: {
+    follow: "SÍGUENOS",
+    before: "Entra en el mundo que",
+    accent: "creamos",
+    after: "bajo las luces.",
+    sub: "Nuestro Instagram es el backstage real: ensayos, estrenos y lo que pasa cuando se alza el telón.",
+    cta: "Ver en Instagram",
+  },
   projects: {
     eyebrow: "Proyectos",
     titleLine1: "Algunos escenarios",
     titleEm: "donde ya estuvimos",
     intro:
-      "Una muestra de los contextos en los que Bellux lleva el espectáculo — de resorts del Algarve a grandes producciones navideñas.",
-    headlineBefore: "Del hotel al",
-    accent1: "gran escenario,",
-    mid: "de animaciones a",
-    accent2: "grandes producciones.",
+      "Una muestra de lo que Bellux crea: animaciones, Navidad, escenario y producciones a medida.",
+    headlineBefore: "Espectáculos que",
+    accent1: "emocionan,",
+    mid: "experiencias que",
+    accent2: "permanecen.",
     sub: "Convertimos ideas en momentos de los que la gente habla — y recuerda.",
     cta: "Ver proyectos",
     items: [

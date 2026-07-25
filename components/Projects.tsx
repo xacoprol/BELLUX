@@ -37,17 +37,18 @@ export default function Projects() {
 
       frames.forEach((frame) => {
         const rect = frame.getBoundingClientRect();
-        const start = vh * 1.35;
-        const end = vh * 0.08;
+        const start = vh * 1.75;
+        const end = vh * -0.05;
         const raw = (start - rect.top) / (start - end);
         const p = Math.min(1, Math.max(0, raw));
-        const eased = 1 - Math.pow(1 - p, 1.35);
-        const tilt = (1 - eased) * 58;
-        const scale = 0.78 + eased * 0.22;
-        const y = (1 - eased) * 110;
-        const opacity = 0.2 + eased * 0.8;
+        /* Stay steep longer, then snap flatter near the end */
+        const eased = 1 - Math.pow(1 - p, 2.1);
+        const tilt = (1 - eased) * 92;
+        const scale = 0.62 + eased * 0.38;
+        const y = (1 - eased) * 220;
+        const opacity = 0.08 + eased * 0.92;
 
-        frame.style.transform = `perspective(1400px) rotateX(${tilt}deg) scale(${scale}) translateY(${y}px)`;
+        frame.style.transform = `perspective(900px) rotateX(${tilt}deg) scale(${scale}) translateY(${y}px)`;
         frame.style.opacity = String(opacity);
       });
 

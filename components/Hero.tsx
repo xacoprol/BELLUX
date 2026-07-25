@@ -22,7 +22,7 @@ export default function Hero() {
 
   const titleLead = `${t.hero.titleLine1} ${t.hero.titleLine2}`;
   const titleAccent = t.hero.titleLine3;
-  const tagline = t.hero.subtitle.replace("\n", " · ");
+  const tagline = t.hero.subtitle;
   const clientLogos = t.clients.items;
 
   const closeMenu = () => setMenuOpen(false);
@@ -138,26 +138,32 @@ export default function Hero() {
         </h1>
 
         <div className="hero-lower">
+          <div className="hero-logos" aria-label={t.clients.eyebrow}>
+            <div className="hero-logos-track">
+              {Array.from({ length: 4 }, (_, loop) => (
+                <ul
+                  className="hero-logos-group"
+                  key={loop}
+                  aria-hidden={loop > 0}
+                >
+                  {clientLogos.map((name) => (
+                    <li key={`${loop}-${name}`} className="hero-logo-item">
+                      {name}
+                    </li>
+                  ))}
+                </ul>
+              ))}
+            </div>
+          </div>
+
           <div className="hero-aside">
             <p className="hero-tagline">{tagline}</p>
             <div className="hero-actions">
-              <Link href="#contacto" className="hero-pill hero-pill--glass">
-                {t.hero.ctaPrimary}
-                <span className="hero-dot" aria-hidden="true" />
-              </Link>
               <Link href="#servicios" className="hero-pill hero-pill--outline">
                 {t.hero.ctaSecondary}
               </Link>
             </div>
           </div>
-
-          <ul className="hero-logos" aria-label={t.clients.eyebrow}>
-            {clientLogos.map((name) => (
-              <li key={name} className="hero-logo-item">
-                {name}
-              </li>
-            ))}
-          </ul>
         </div>
       </div>
     </section>

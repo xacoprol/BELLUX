@@ -124,6 +124,14 @@ export type SiteContent = {
     items: { quote: string; who: string }[];
     note: string;
   };
+  instagram: {
+    follow: string;
+    before: string;
+    accent: string;
+    after: string;
+    sub: string;
+    cta: string;
+  };
   projects: {
     eyebrow: string;
     titleLine1: string;
