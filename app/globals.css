@@ -574,27 +574,31 @@ body::before {
 .hero-logo-item {
   font-family: var(--sans);
   font-weight: 600;
-  font-size: clamp(0.78rem, 1.5vw, 1.15rem);
+  font-size: clamp(0.82rem, 1.5vw, 1.1rem);
   letter-spacing: clamp(0.04em, 0.2vw, 0.08em);
   text-transform: uppercase;
   color: rgba(255, 255, 255, 0.62);
   white-space: nowrap;
   flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  line-height: 1;
+  height: clamp(1.35rem, 2.4vw, 1.75rem);
 }
 
-.hero-logos-group .hero-logo-item:nth-child(4n + 2) {
-  font-size: clamp(0.88rem, 1.8vw, 1.35rem);
-  color: rgba(255, 255, 255, 0.55);
+.hero-logo-item.has-logo {
+  text-transform: none;
+  letter-spacing: 0;
 }
 
-.hero-logos-group .hero-logo-item:nth-child(4n + 3) {
-  font-size: clamp(0.72rem, 1.3vw, 1rem);
-  color: rgba(255, 255, 255, 0.5);
-}
-
-.hero-logos-group .hero-logo-item:nth-child(4n + 4) {
-  font-size: clamp(0.82rem, 1.6vw, 1.2rem);
-  color: rgba(255, 255, 255, 0.58);
+.hero-logo-img {
+  display: block;
+  height: 100%;
+  width: auto;
+  max-width: 10rem;
+  object-fit: contain;
+  filter: brightness(0) invert(1);
+  opacity: 0.72;
 }
 
 @keyframes heroLogoScroll {
@@ -692,23 +696,6 @@ body::before {
   align-items: center;
 }
 
-.manifesto-mark {
-  width: 18px;
-  height: 18px;
-  border: 1.5px solid rgba(255, 255, 255, 0.85);
-  border-radius: 50%;
-  display: grid;
-  place-items: center;
-  margin-bottom: clamp(1.75rem, 4vw, 2.5rem);
-}
-
-.manifesto-mark span {
-  width: 5px;
-  height: 5px;
-  border-radius: 50%;
-  background: var(--white);
-}
-
 .manifesto-title {
   font-family: var(--display);
   font-weight: 400;
@@ -757,6 +744,69 @@ body::before {
   line-height: 1.65;
   color: rgba(255, 255, 255, 0.88);
   text-wrap: pretty;
+}
+
+.manifesto-toggle {
+  margin-top: clamp(1.35rem, 3vw, 2rem);
+  cursor: pointer;
+}
+
+.manifesto-toggle.is-open {
+  border-color: var(--magenta);
+  background: rgba(254, 2, 100, 0.08);
+}
+
+.manifesto-toggle.is-open .hero-dot {
+  background: var(--yellow);
+}
+
+.manifesto-story {
+  display: grid;
+  grid-template-rows: 0fr;
+  max-width: 42rem;
+  margin-top: 0;
+  opacity: 0;
+  transition:
+    grid-template-rows 0.65s var(--ease-out),
+    opacity 0.45s ease,
+    margin-top 0.45s var(--ease-out);
+}
+
+.manifesto-story.is-open {
+  grid-template-rows: 1fr;
+  margin-top: clamp(1.5rem, 3.5vw, 2.25rem);
+  opacity: 1;
+}
+
+.manifesto-story-inner {
+  overflow: hidden;
+  min-height: 0;
+  text-align: left;
+}
+
+.manifesto-story-inner p {
+  font-family: var(--sans);
+  font-size: clamp(0.9rem, 1.2vw, 1rem);
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.78);
+  text-wrap: pretty;
+  transform: translateY(0.6rem);
+  transition: transform 0.55s var(--ease-out);
+}
+
+.manifesto-story.is-open .manifesto-story-inner p {
+  transform: translateY(0);
+}
+
+.manifesto-story-inner p + p {
+  margin-top: 1.1rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .manifesto-story,
+  .manifesto-story-inner p {
+    transition: none;
+  }
 }
 
 /* ─── MARQUEE ─── */

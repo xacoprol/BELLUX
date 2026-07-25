@@ -1,4 +1,4 @@
-import Hero from "@/components/Hero";
+import HeroSection from "@/components/HeroSection";
 import Manifesto from "@/components/Manifesto";
 import ServicesSection from "@/components/ServicesSection";
 import ProjectsSection from "@/components/ProjectsSection";
@@ -11,7 +11,7 @@ export default function Home() {
   return (
     <>
       <main>
-        <Hero />
+        <HeroSection />
         <Manifesto />
         <ServicesSection />
         <ProjectsSection />

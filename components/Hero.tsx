@@ -5,10 +5,10 @@ import Link from "next/link";
 import { useLanguage } from "@/context/LanguageContext";
 import { localeLabels, locales } from "@/lib/i18n/content";
 import type { Locale } from "@/lib/i18n/types";
-import { wpMedia } from "@/lib/wp";
+import { wpMedia, type WpClient } from "@/lib/wp";
 import Logo from "./Logo";
 
-export default function Hero() {
+export default function Hero({ wpClients = [] }: { wpClients?: WpClient[] }) {
   const { locale, setLocale, t } = useLanguage();
   const [menuOpen, setMenuOpen] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -23,7 +23,14 @@ export default function Hero() {
   const titleLead = `${t.hero.titleLine1} ${t.hero.titleLine2}`;
   const titleAccent = t.hero.titleLine3;
   const tagline = t.hero.subtitle;
-  const clientLogos = t.clients.items;
+  const clientLogos: WpClient[] =
+    wpClients.length > 0
+      ? wpClients
+      : t.clients.items.map((title, i) => ({
+          id: i,
+          title,
+          logo: "",
+        }));
 
   const closeMenu = () => setMenuOpen(false);
 
@@ -146,9 +153,24 @@ export default function Hero() {
                   key={loop}
                   aria-hidden={loop > 0}
                 >
-                  {clientLogos.map((name) => (
-                    <li key={`${loop}-${name}`} className="hero-logo-item">
-                      {name}
+                  {clientLogos.map((client) => (
+                    <li
+                      key={`${loop}-${client.id}`}
+                      className={`hero-logo-item${
+                        client.logo ? " has-logo" : ""
+                      }`}
+                    >
+                      {client.logo ? (
+                        // eslint-disable-next-line @next/next/no-img-element
+                        <img
+                          src={client.logo}
+                          alt={client.title}
+                          className="hero-logo-img"
+                          draggable={false}
+                        />
+                      ) : (
+                        client.title
+                      )}
                     </li>
                   ))}
                 </ul>

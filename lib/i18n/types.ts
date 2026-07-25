@@ -67,6 +67,9 @@ export type SiteContent = {
     mid: string;
     accent3: string;
     sub: string;
+    readMore: string;
+    readLess: string;
+    story: string[];
   };
   about: {
     eyebrow: string;

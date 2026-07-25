@@ -197,6 +197,7 @@ export type WpService = {
 type WpServicio = {
   id: number;
   title?: WpRendered;
+  excerpt?: WpRendered;
   featured_media?: number;
   _embedded?: {
     "wp:featuredmedia"?: WpMedia[];
@@ -223,17 +224,18 @@ function mapServicio(post: WpServicio): WpService | null {
   if (!title) return null;
   const media = post._embedded?.["wp:featuredmedia"]?.[0];
   const image = pickImage(media);
-  const tagWords = title.split(/\s+/).slice(0, 2).join(" ").toUpperCase();
+  const excerpt = stripHtml(post.excerpt?.rendered || "").trim();
+  const fallbackTag = title.split(/\s+/).slice(0, 2).join(" ").toUpperCase();
 
   return {
     id: post.id,
-    tag: tagWords || title.toUpperCase(),
+    tag: (excerpt || fallbackTag || title).toUpperCase(),
     lines: titleToServiceLines(title),
     image,
   };
 }
 
-/** Published servicios from WP CPT `servicio` (title + featured image). */
+/** Published servicios from WP CPT `servicio` (title, excerpt as tag, featured image). */
 export async function getWpServices(limit = 12): Promise<WpService[]> {
   try {
     const url = wpRest("/wp/v2/servicio", {
@@ -255,6 +257,59 @@ export async function getWpServices(limit = 12): Promise<WpService[]> {
     if (!Array.isArray(data) || data.length === 0) return [];
 
     return data.map(mapServicio).filter((s): s is WpService => Boolean(s));
+  } catch {
+    return [];
+  }
+}
+
+export type WpClient = {
+  id: number;
+  title: string;
+  logo: string;
+};
+
+type WpCliente = {
+  id: number;
+  title?: WpRendered;
+  featured_media?: number;
+  _embedded?: {
+    "wp:featuredmedia"?: WpMedia[];
+  };
+};
+
+function mapCliente(post: WpCliente): WpClient | null {
+  const title = stripHtml(post.title?.rendered || "");
+  if (!title) return null;
+  const media = post._embedded?.["wp:featuredmedia"]?.[0];
+  return {
+    id: post.id,
+    title,
+    logo: pickImage(media),
+  };
+}
+
+/** Published clients from WP CPT `clientes` (title + featured image as logo). */
+export async function getWpClients(limit = 40): Promise<WpClient[]> {
+  try {
+    const url = wpRest("/wp/v2/clientes", {
+      per_page: String(limit),
+      _embed: "1",
+      orderby: "title",
+      order: "asc",
+      status: "publish",
+    });
+
+    const res = await fetch(url, {
+      next: { revalidate: 300 },
+      headers: { Accept: "application/json" },
+    });
+
+    if (!res.ok) return [];
+
+    const data = (await res.json()) as WpCliente[];
+    if (!Array.isArray(data) || data.length === 0) return [];
+
+    return data.map(mapCliente).filter((c): c is WpClient => Boolean(c));
   } catch {
     return [];
   }

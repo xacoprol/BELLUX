@@ -1,18 +1,17 @@
 "use client";
 
+import { useId, useState } from "react";
 import { useLanguage } from "@/context/LanguageContext";
 
 export default function Manifesto() {
   const { t } = useLanguage();
   const m = t.manifesto;
+  const [open, setOpen] = useState(false);
+  const storyId = useId();
 
   return (
     <section className="manifesto" id="sobre" aria-labelledby="manifesto-title">
       <div className="wrap manifesto-inner" data-r>
-        <div className="manifesto-mark" aria-hidden="true">
-          <span />
-        </div>
-
         <h2 id="manifesto-title" className="manifesto-title">
           {m.before}{" "}
           <span className="manifesto-accent manifesto-accent--cyan">
@@ -29,6 +28,31 @@ export default function Manifesto() {
         </h2>
 
         <p className="manifesto-sub">{m.sub}</p>
+
+        <button
+          type="button"
+          className={`hero-pill hero-pill--outline manifesto-toggle${
+            open ? " is-open" : ""
+          }`}
+          aria-expanded={open}
+          aria-controls={storyId}
+          onClick={() => setOpen((v) => !v)}
+        >
+          {open ? m.readLess : m.readMore}
+          <span className="hero-dot" aria-hidden="true" />
+        </button>
+
+        <div
+          id={storyId}
+          className={`manifesto-story${open ? " is-open" : ""}`}
+          aria-hidden={!open}
+        >
+          <div className="manifesto-story-inner">
+            {m.story.map((paragraph) => (
+              <p key={paragraph.slice(0, 48)}>{paragraph}</p>
+            ))}
+          </div>
+        </div>
       </div>
     </section>
   );
