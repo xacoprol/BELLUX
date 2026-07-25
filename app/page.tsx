@@ -1,6 +1,6 @@
 import Hero from "@/components/Hero";
 import Manifesto from "@/components/Manifesto";
-import Services from "@/components/Services";
+import ServicesSection from "@/components/ServicesSection";
 import ProjectsSection from "@/components/ProjectsSection";
 import Testimonials from "@/components/Testimonials";
 import InstagramSection from "@/components/InstagramSection";
@@ -13,7 +13,7 @@ export default function Home() {
       <main>
         <Hero />
         <Manifesto />
-        <Services />
+        <ServicesSection />
         <ProjectsSection />
         <Testimonials />
         <InstagramSection />

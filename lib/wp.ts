@@ -186,3 +186,76 @@ export async function getWpProjects(limit = 12): Promise<WpProject[]> {
     return [];
   }
 }
+
+export type WpService = {
+  id: number;
+  tag: string;
+  lines: { text: string; accent?: "cyan" | "magenta" | "yellow" }[][];
+  image: string;
+};
+
+type WpServicio = {
+  id: number;
+  title?: WpRendered;
+  featured_media?: number;
+  _embedded?: {
+    "wp:featuredmedia"?: WpMedia[];
+  };
+};
+
+/** Split WP title into stacked display lines (Boldonse carousel style). */
+function titleToServiceLines(
+  title: string
+): { text: string; accent?: "cyan" | "magenta" | "yellow" }[][] {
+  const words = title.toUpperCase().split(/\s+/).filter(Boolean);
+  if (words.length === 0) return [];
+
+  return words.map((word, i) => [
+    {
+      text: word,
+      accent: i % 2 === 1 ? ACCENTS[i % ACCENTS.length] : undefined,
+    },
+  ]);
+}
+
+function mapServicio(post: WpServicio): WpService | null {
+  const title = stripHtml(post.title?.rendered || "");
+  if (!title) return null;
+  const media = post._embedded?.["wp:featuredmedia"]?.[0];
+  const image = pickImage(media);
+  const tagWords = title.split(/\s+/).slice(0, 2).join(" ").toUpperCase();
+
+  return {
+    id: post.id,
+    tag: tagWords || title.toUpperCase(),
+    lines: titleToServiceLines(title),
+    image,
+  };
+}
+
+/** Published servicios from WP CPT `servicio` (title + featured image). */
+export async function getWpServices(limit = 12): Promise<WpService[]> {
+  try {
+    const url = wpRest("/wp/v2/servicio", {
+      per_page: String(limit),
+      _embed: "1",
+      orderby: "date",
+      order: "desc",
+      status: "publish",
+    });
+
+    const res = await fetch(url, {
+      next: { revalidate: 300 },
+      headers: { Accept: "application/json" },
+    });
+
+    if (!res.ok) return [];
+
+    const data = (await res.json()) as WpServicio[];
+    if (!Array.isArray(data) || data.length === 0) return [];
+
+    return data.map(mapServicio).filter((s): s is WpService => Boolean(s));
+  } catch {
+    return [];
+  }
+}

@@ -2,25 +2,34 @@
 
 import { useEffect, useRef, useState, type CSSProperties } from "react";
 import { useLanguage } from "@/context/LanguageContext";
+import type { WpService } from "@/lib/wp";
 
-export default function Services() {
+type ServiceItem = {
+  tag: string;
+  lines: { text: string; accent?: "cyan" | "magenta" | "yellow" }[][];
+  image: string;
+};
+
+export default function Services({
+  wpServices = [],
+}: {
+  wpServices?: WpService[];
+}) {
   const { t } = useLanguage();
-  const items = t.services.items;
+  const items: ServiceItem[] =
+    wpServices.length > 0 ? wpServices : t.services.items;
+
   const [index, setIndex] = useState(0);
   const [perView, setPerView] = useState(2);
-  const [hoverImage, setHoverImage] = useState<string | null>(null);
-  const [hoverCol, setHoverCol] = useState(0);
+  const [hoverCol, setHoverCol] = useState<number | null>(null);
+  const [focusCol, setFocusCol] = useState(0);
   const [flashing, setFlashing] = useState(false);
   const [paused, setPaused] = useState(false);
   const flashTimer = useRef<number | null>(null);
   const indexRef = useRef(index);
   const flashingRef = useRef(flashing);
   const maxIndexRef = useRef(0);
-
-  const setHover = (image: string | null, col = 0) => {
-    setHoverImage(image);
-    setHoverCol(image ? col : 0);
-  };
+  const focusColRef = useRef(0);
 
   useEffect(() => {
     const sync = () => setPerView(window.innerWidth < 768 ? 1 : 2);
@@ -41,6 +50,7 @@ export default function Services() {
   indexRef.current = index;
   flashingRef.current = flashing;
   maxIndexRef.current = maxIndex;
+  focusColRef.current = focusCol;
 
   useEffect(() => {
     setIndex((i) => {
@@ -53,7 +63,8 @@ export default function Services() {
     const snapped = Math.floor(next / perView) * perView;
     const clamped = Math.min(Math.max(0, snapped), maxIndexRef.current);
     if (flashingRef.current || clamped === indexRef.current) return;
-    setHover(null);
+    setHoverCol(null);
+    setFocusCol(0);
     setFlashing(true);
 
     if (flashTimer.current) window.clearTimeout(flashTimer.current);
@@ -72,30 +83,52 @@ export default function Services() {
     flashTo(next);
   };
 
+  const visible = items.slice(index, index + perView);
+
+  // Autoplay: left photo → right photo → next page (nunca vuelve a la izquierda)
   useEffect(() => {
-    if (paused || pageCount < 2) return;
+    if (paused || hoverCol !== null) {
+      if (visible.length === 1) setFocusCol(0);
+      return;
+    }
 
     const id = window.setInterval(() => {
       if (flashingRef.current) return;
-      let next = indexRef.current + perView;
-      if (next > maxIndexRef.current) next = 0;
-      flashTo(next);
-    }, 4000);
+
+      const last = Math.max(0, visible.length - 1);
+      const c = focusColRef.current;
+
+      if (c < last) {
+        setFocusCol(c + 1);
+        return;
+      }
+
+      // Ya pasó una vez por cada diapo visible → siguiente página
+      if (pageCount > 1) {
+        let next = indexRef.current + perView;
+        if (next > maxIndexRef.current) next = 0;
+        flashTo(next);
+      }
+    }, 3000);
 
     return () => window.clearInterval(id);
-  }, [paused, pageCount, perView]);
+  }, [paused, hoverCol, visible.length, pageCount, perView]);
 
-  const visible = items.slice(index, index + perView);
-  const stageOn = Boolean(hoverImage);
+  const activeCol = hoverCol ?? Math.min(focusCol, Math.max(0, visible.length - 1));
+  const stageImage = visible[activeCol]?.image || visible[0]?.image || "";
+  const stageOn = Boolean(stageImage);
   const stageBias =
-    !stageOn || perView < 2 ? 0 : hoverCol === 0 ? -1 : 1;
+    !stageOn || perView < 2 ? 0 : activeCol === 0 ? -1 : 1;
 
   return (
     <section className="services" id="servicios">
       <div
         className={`svc-carousel${flashing ? " is-flashing" : ""}${stageOn ? " is-stage-on" : ""}`}
         onMouseEnter={() => setPaused(true)}
-        onMouseLeave={() => setPaused(false)}
+        onMouseLeave={() => {
+          setPaused(false);
+          setHoverCol(null);
+        }}
       >
         <div className="svc-flash" aria-hidden="true" />
 
@@ -107,13 +140,12 @@ export default function Services() {
               "--svc-stage-bias": stageBias,
             } as CSSProperties
           }
-          onMouseLeave={() => setHover(null)}
         >
           <div className="svc-stage" aria-hidden="true">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               className={`svc-stage-img${stageOn ? " is-on" : ""}`}
-              src={hoverImage ?? items[0]?.image}
+              src={stageImage}
               alt=""
               draggable={false}
             />
@@ -127,19 +159,20 @@ export default function Services() {
 
           {visible.map((item, i) => {
             const globalIndex = index + i;
+            const isActive = activeCol === i;
 
             return (
               <article
                 key={`${item.tag}-${globalIndex}-${index}`}
-                className={`svc-slide${hoverImage === item.image ? " is-active" : ""}${
+                className={`svc-slide${isActive ? " is-active" : ""}${
                   visible.length > 1
                     ? i === 0
                       ? " svc-slide--left"
                       : " svc-slide--right"
                     : ""
                 }`}
-                onMouseEnter={() => setHover(item.image, i)}
-                onFocus={() => setHover(item.image, i)}
+                onMouseEnter={() => setHoverCol(i)}
+                onFocus={() => setHoverCol(i)}
                 onClick={() => {
                   if (
                     window.matchMedia("(hover: hover) and (pointer: fine)")
@@ -147,7 +180,7 @@ export default function Services() {
                   ) {
                     return;
                   }
-                  setHover(hoverImage === item.image ? null : item.image, i);
+                  setHoverCol((cur) => (cur === i ? null : i));
                 }}
               >
                 <div className="svc-slide-content">
