@@ -18,7 +18,6 @@ export default function Home() {
         <div className="s-rule" />
         <Testimonials />
         <InstagramSection />
-        <div className="s-rule" />
         <Contact />
       </main>
       <Footer />

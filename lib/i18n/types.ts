@@ -160,6 +160,12 @@ export type SiteContent = {
     whatsappIntro: string;
     whatsappCta: string;
     eventTypes: string[];
+    ringBefore: string;
+    ringAccent: string;
+    ringAfter: string;
+    pitch: string;
+    cta: string;
+    close: string;
   };
   footer: {
     copy: string;

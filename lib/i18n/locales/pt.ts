@@ -387,6 +387,12 @@ export const pt: SiteContent = {
       "Evento de empresa",
       "Evento privado",
     ],
+    ringBefore: "Vamos",
+    ringAccent: "Criar",
+    ringAfter: "Algo Juntos",
+    pitch: "Conta-nos o que estás a preparar. Mostramos-te o que é possível.",
+    cta: "Contactar",
+    close: "Fechar",
   },
   footer: {
     copy: "© 2026 Bellux Entertainment",

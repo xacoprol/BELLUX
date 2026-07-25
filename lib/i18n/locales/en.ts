@@ -386,6 +386,12 @@ export const en: SiteContent = {
       "Corporate event",
       "Private event",
     ],
+    ringBefore: "Let's",
+    ringAccent: "Build",
+    ringAfter: "Something Together",
+    pitch: "Tell us what you're working on. We'll show you what's possible.",
+    cta: "Get in touch",
+    close: "Close",
   },
   footer: {
     copy: "© 2026 Bellux Entertainment",

@@ -1897,6 +1897,185 @@ section.hero {
   }
 }
 
+/* ─── CONTACT CTA ─── */
+.contact-cta {
+  position: relative;
+  background: #000;
+  color: #fff;
+  min-height: clamp(560px, 82vh, 860px);
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  padding: clamp(2rem, 6vw, 4rem) 1.25rem clamp(4rem, 10vw, 6rem);
+  border-bottom: 1px solid var(--yellow);
+}
+
+.contact-cta-frame {
+  position: relative;
+  width: min(132vw, 920px);
+  aspect-ratio: 1;
+  display: grid;
+  place-items: center;
+  /* Drop frame so bottom of circle crops; core stays on circle center */
+  transform: translateY(24%);
+}
+
+.contact-cta-orbit {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  animation: contactRingSpin 50s linear infinite;
+  will-change: transform;
+}
+
+.contact-cta-ring {
+  width: 100%;
+  height: 100%;
+  display: block;
+  overflow: visible;
+}
+
+.contact-cta-ring-text {
+  font-family: var(--display);
+  font-size: 46px;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+@keyframes contactRingSpin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(-360deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .contact-cta-orbit { animation: none; }
+}
+
+.contact-cta-core {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 1.5rem;
+  width: min(70%, 18.5rem);
+}
+
+.contact-cta-pitch {
+  font-family: var(--display);
+  font-size: clamp(1.15rem, 2.3vw, 1.55rem);
+  line-height: 1.32;
+  color: #fff;
+  text-wrap: balance;
+}
+
+.contact-cta-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.85rem 1.5rem;
+  border: none;
+  border-radius: 999px;
+  background: #fff;
+  color: #0a0a0a;
+  font-family: var(--sans);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.contact-cta-btn:hover {
+  transform: translateY(-1px);
+  background: #f2f2f2;
+}
+
+.contact-cta-dot {
+  width: 0.45rem;
+  height: 0.45rem;
+  border-radius: 50%;
+  background: var(--magenta);
+}
+
+.contact-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  display: grid;
+  place-items: center;
+  padding: clamp(1rem, 4vw, 2rem);
+}
+
+.contact-modal-backdrop {
+  position: absolute;
+  inset: 0;
+  border: none;
+  background: rgba(0, 0, 0, 0.72);
+  cursor: pointer;
+}
+
+.contact-modal-panel {
+  position: relative;
+  z-index: 1;
+  width: min(100%, 980px);
+  max-height: min(92vh, 900px);
+  overflow: auto;
+  background: var(--black);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: clamp(1.5rem, 4vw, 2.75rem);
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.45);
+}
+
+.contact-modal-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: transparent;
+  color: #fff;
+  font-family: var(--sans);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 0.55rem 0.85rem;
+  cursor: pointer;
+  z-index: 2;
+}
+
+.contact-modal-close:hover {
+  border-color: var(--magenta);
+  color: var(--magenta);
+}
+
+.contact-modal .contact-grid {
+  margin-top: 0.5rem;
+}
+
+@media (max-width: 720px) {
+  .contact-cta {
+    min-height: clamp(520px, 78vh, 720px);
+  }
+
+  .contact-cta-frame {
+    width: min(165vw, 820px);
+    transform: translateY(26%);
+  }
+
+  .contact-cta-ring-text {
+    font-size: 40px;
+  }
+
+  .contact-cta-core {
+    width: min(72%, 16.5rem);
+  }
+}
+
 /* ─── CONTACT ─── */
 .contact {
   background: var(--black);
