@@ -16,12 +16,9 @@ export default function Testimonials() {
       </div>
 
       <div className="testimonials-grid">
-        {t.testimonials.items.map((item, i) => (
-          <article
-            key={item.quote}
-            className={`tcard tcard--${(["cyan", "magenta", "yellow"] as const)[i % 3]}`}
-          >
-            <div className="tcard-stars" aria-label="5">
+        {t.testimonials.items.map((item) => (
+          <article key={item.quote} className="tcard">
+            <div className="tcard-stars" aria-hidden="true">
               ★★★★★
             </div>
             <p className="tcard-quote">&ldquo;{item.quote}&rdquo;</p>
