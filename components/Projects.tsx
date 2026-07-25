@@ -3,10 +3,36 @@
 import { useEffect, useRef } from "react";
 import Link from "next/link";
 import { useLanguage } from "@/context/LanguageContext";
+import type { WpProject } from "@/lib/wp";
 
-export default function Projects() {
+type ProjectItem = {
+  title: string;
+  description: string;
+  tag: string;
+  image: string;
+  video?: string;
+  accent?: "cyan" | "magenta" | "yellow";
+};
+
+export default function Projects({
+  wpProjects = [],
+}: {
+  wpProjects?: WpProject[];
+}) {
   const { t } = useLanguage();
   const listRef = useRef<HTMLDivElement>(null);
+
+  const items: ProjectItem[] =
+    wpProjects.length > 0
+      ? wpProjects.map((p) => ({
+          title: p.title,
+          description: p.description,
+          tag: p.tag || t.projects.eyebrow,
+          image: p.image,
+          video: p.video,
+          accent: p.accent,
+        }))
+      : t.projects.items;
 
   useEffect(() => {
     const root = listRef.current;
@@ -41,7 +67,6 @@ export default function Projects() {
         const end = vh * -0.05;
         const raw = (start - rect.top) / (start - end);
         const p = Math.min(1, Math.max(0, raw));
-        /* Stay steep longer, then snap flatter near the end */
         const eased = 1 - Math.pow(1 - p, 2.1);
         const tilt = (1 - eased) * 92;
         const scale = 0.62 + eased * 0.38;
@@ -60,7 +85,7 @@ export default function Projects() {
       alive = false;
       cancelAnimationFrame(raf);
     };
-  }, [t.projects.items.length]);
+  }, [items.length]);
 
   return (
     <section className="projects" id="proyectos">
@@ -85,26 +110,47 @@ export default function Projects() {
       </div>
 
       <div className="wrap projects-list" id="proyectos-list" ref={listRef}>
-        {t.projects.items.map((item) => (
+        {items.map((item) => (
           <article key={item.title} className="proj-card">
             <div className="proj-card-frame" data-proj-frame>
-              <div
-                className="proj-card-media"
-                style={{ backgroundImage: `url(${item.image})` }}
-                role="img"
-                aria-label={item.title}
-              />
-              <span
-                className={`proj-card-tag proj-card-tag--${item.accent ?? "cyan"}`}
-              >
-                <i aria-hidden="true" />
-                {item.tag}
-              </span>
+              {item.video ? (
+                <video
+                  className="proj-card-media proj-card-media--video"
+                  src={item.video}
+                  poster={item.image || undefined}
+                  muted
+                  loop
+                  playsInline
+                  autoPlay
+                  aria-label={item.title}
+                />
+              ) : (
+                <div
+                  className="proj-card-media"
+                  style={
+                    item.image
+                      ? { backgroundImage: `url(${item.image})` }
+                      : undefined
+                  }
+                  role="img"
+                  aria-label={item.title}
+                />
+              )}
+              {item.tag ? (
+                <span
+                  className={`proj-card-tag proj-card-tag--${item.accent ?? "cyan"}`}
+                >
+                  <i aria-hidden="true" />
+                  {item.tag}
+                </span>
+              ) : null}
             </div>
 
             <div className="proj-card-meta">
               <h3 className="proj-card-title">{item.title}</h3>
-              <p className="proj-card-desc">{item.description}</p>
+              {item.description ? (
+                <p className="proj-card-desc">{item.description}</p>
+              ) : null}
             </div>
           </article>
         ))}

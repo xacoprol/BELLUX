@@ -1845,6 +1845,13 @@ section.hero {
   width: 100%;
   background-size: cover;
   background-position: center;
+  background-color: #1a1a1a;
+  display: block;
+  object-fit: cover;
+}
+
+.proj-card-media--video {
+  pointer-events: none;
 }
 
 .proj-card-tag {
