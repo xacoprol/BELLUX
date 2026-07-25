@@ -392,6 +392,9 @@ export const es: SiteContent = {
     pitch: "Cuéntanos en qué estás trabajando. Te mostramos lo que es posible.",
     cta: "Contactar",
     close: "Cerrar",
+    successTitle: "Hemos recibido tu solicitud.",
+    successText:
+      "El equipo Bellux responde en breve — en portugués, español o inglés.",
   },
   footer: {
     copy: "© 2026 Bellux Entertainment",

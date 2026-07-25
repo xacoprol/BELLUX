@@ -166,6 +166,8 @@ export type SiteContent = {
     pitch: string;
     cta: string;
     close: string;
+    successTitle: string;
+    successText: string;
   };
   footer: {
     copy: string;

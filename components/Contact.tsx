@@ -19,11 +19,22 @@ const whatsappContacts = [
 export default function Contact() {
   const { t } = useLanguage();
   const [open, setOpen] = useState(false);
-  const closeRef = useRef<HTMLButtonElement>(null);
+  const [eventType, setEventType] = useState("");
+  const [sent, setSent] = useState(false);
+  const panelRef = useRef<HTMLDivElement>(null);
+  const firstFieldRef = useRef<HTMLInputElement>(null);
   const pathId = useId().replace(/:/g, "");
 
-  const openModal = () => setOpen(true);
-  const closeModal = () => setOpen(false);
+  const openModal = () => {
+    setSent(false);
+    setOpen(true);
+  };
+  const closeModal = () => {
+    setOpen(false);
+    if (window.location.hash === "#contacto") {
+      history.replaceState(null, "", window.location.pathname + window.location.search);
+    }
+  };
 
   useEffect(() => {
     const maybeOpen = () => {
@@ -53,7 +64,7 @@ export default function Contact() {
     if (!open) return;
     const prev = document.body.style.overflow;
     document.body.style.overflow = "hidden";
-    closeRef.current?.focus();
+    const tId = window.setTimeout(() => firstFieldRef.current?.focus(), 80);
 
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") closeModal();
@@ -61,13 +72,24 @@ export default function Contact() {
     window.addEventListener("keydown", onKey);
     return () => {
       document.body.style.overflow = prev;
+      window.clearTimeout(tId);
       window.removeEventListener("keydown", onKey);
     };
   }, [open]);
 
+  const onSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setSent(true);
+    panelRef.current?.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
   return (
     <>
-      <section className="contact-cta" id="contacto" aria-labelledby="contact-cta-pitch">
+      <section
+        className="contact-cta"
+        id="contacto"
+        aria-labelledby="contact-cta-pitch"
+      >
         <div className="contact-cta-frame">
           <div className="contact-cta-orbit" aria-hidden="true">
             <svg
@@ -129,112 +151,153 @@ export default function Contact() {
             aria-label={t.contact.close}
             onClick={closeModal}
           />
-          <div className="contact-modal-panel">
-            <button
-              ref={closeRef}
-              type="button"
-              className="contact-modal-close"
-              onClick={closeModal}
-            >
-              {t.contact.close}
-            </button>
 
-            <div className="contact-grid">
+          <div className="contact-modal-panel" ref={panelRef}>
+            <header className="contact-modal-top">
               <div>
-                <p className="eyebrow">{t.contact.eyebrow}</p>
-                <div className="rule left" />
-                <h2 id="contact-modal-title" className="title">
-                  {t.contact.titleLine1}
-                  <br />
-                  <em>{t.contact.titleEm}</em>
+                <p className="contact-modal-eyebrow">{t.contact.eyebrow}</p>
+                <h2 id="contact-modal-title" className="contact-modal-title">
+                  {t.contact.titleLine1}{" "}
+                  <span>{t.contact.titleEm}</span>
                 </h2>
-                <p className="contact-intro">{t.contact.intro}</p>
-                <form
-                  className="contact-form"
-                  onSubmit={(e) => e.preventDefault()}
+              </div>
+              <button
+                type="button"
+                className="contact-modal-close"
+                onClick={closeModal}
+                aria-label={t.contact.close}
+              >
+                <span aria-hidden="true">×</span>
+              </button>
+            </header>
+
+            {sent ? (
+              <div className="contact-modal-success" role="status">
+                <p className="contact-modal-success-title">
+                  {t.contact.successTitle}
+                </p>
+                <p className="contact-modal-success-text">
+                  {t.contact.successText}
+                </p>
+                <button
+                  type="button"
+                  className="contact-modal-submit"
+                  onClick={closeModal}
                 >
-                  <div className="field">
-                    <input type="text" placeholder=" " id="name" name="name" />
-                    <span className="field-label">{t.contact.name}</span>
+                  {t.contact.close}
+                  <span className="contact-cta-dot" aria-hidden="true" />
+                </button>
+              </div>
+            ) : (
+              <div className="contact-modal-body">
+                <form className="contact-modal-form" onSubmit={onSubmit}>
+                  <p className="contact-modal-intro">{t.contact.intro}</p>
+
+                  <div className="contact-modal-row">
+                    <label className="contact-field">
+                      <span>{t.contact.name}</span>
+                      <input
+                        ref={firstFieldRef}
+                        type="text"
+                        name="name"
+                        required
+                        autoComplete="name"
+                      />
+                    </label>
+                    <label className="contact-field">
+                      <span>{t.contact.email}</span>
+                      <input
+                        type="email"
+                        name="email"
+                        required
+                        autoComplete="email"
+                      />
+                    </label>
                   </div>
-                  <div className="field">
+
+                  <label className="contact-field">
+                    <span>{t.contact.phone}</span>
                     <input
-                      type="email"
-                      placeholder=" "
-                      id="email"
-                      name="email"
+                      type="tel"
+                      name="phone"
+                      autoComplete="tel"
                     />
-                    <span className="field-label">{t.contact.email}</span>
-                  </div>
-                  <div className="field">
-                    <input type="tel" placeholder=" " id="phone" name="phone" />
-                    <span className="field-label">{t.contact.phone}</span>
-                  </div>
-                  <div className="field">
-                    <select id="event-type" name="event-type" defaultValue="">
-                      <option value="" disabled />
+                  </label>
+
+                  <fieldset className="contact-chips">
+                    <legend>{t.contact.eventType}</legend>
+                    <div className="contact-chips-list">
                       {t.contact.eventTypes.map((type) => (
-                        <option key={type} value={type}>
+                        <button
+                          key={type}
+                          type="button"
+                          className={`contact-chip${eventType === type ? " is-on" : ""}`}
+                          onClick={() => setEventType(type)}
+                          aria-pressed={eventType === type}
+                        >
                           {type}
-                        </option>
+                        </button>
                       ))}
-                    </select>
-                    <span className="field-label">{t.contact.eventType}</span>
-                  </div>
-                  <div className="field">
-                    <textarea
-                      rows={3}
-                      placeholder=" "
-                      id="details"
-                      name="details"
-                    />
-                    <span className="field-label">{t.contact.details}</span>
-                  </div>
-                  <button type="submit" className="btn btn-gold btn-arrow">
+                    </div>
+                    <input type="hidden" name="event-type" value={eventType} />
+                  </fieldset>
+
+                  <label className="contact-field">
+                    <span>{t.contact.details}</span>
+                    <textarea name="details" rows={3} required />
+                  </label>
+
+                  <button type="submit" className="contact-modal-submit">
                     {t.contact.submit}
+                    <span className="contact-cta-dot" aria-hidden="true" />
                   </button>
                 </form>
-              </div>
 
-              <div>
-                <p className="eyebrow">{t.contact.whatsappEyebrow}</p>
-                <div className="rule left" />
-                <p className="contact-wa-intro">{t.contact.whatsappIntro}</p>
-                <div className="wa-list">
-                  {whatsappContacts.map((wa) => (
+                <aside className="contact-modal-aside">
+                  <p className="contact-modal-aside-label">
+                    {t.contact.whatsappEyebrow}
+                  </p>
+                  <p className="contact-modal-aside-intro">
+                    {t.contact.whatsappIntro}
+                  </p>
+
+                  <div className="contact-wa">
+                    {whatsappContacts.map((wa) => (
+                      <a
+                        key={wa.href}
+                        className="contact-wa-card"
+                        href={wa.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <div>
+                          <strong>{wa.region}</strong>
+                          <span>{wa.phone}</span>
+                        </div>
+                        <span aria-hidden="true">→</span>
+                      </a>
+                    ))}
+                  </div>
+
+                  <div className="contact-social">
                     <a
-                      key={wa.href}
-                      className="wa-item"
-                      href={wa.href}
+                      href="https://www.instagram.com/belluxentertainment"
                       target="_blank"
                       rel="noopener noreferrer"
                     >
-                      <div className="wa-item-left">
-                        <strong>{wa.region}</strong>
-                        <span>{wa.phone}</span>
-                      </div>
-                      <span className="wa-arrow">→</span>
+                      Instagram
                     </a>
-                  ))}
-                </div>
-                <div className="social-row">
-                  <a
-                    href="https://www.facebook.com/belluxentertainment"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    Facebook
-                  </a>
-                  <a
-                    href="https://www.instagram.com/belluxentertainment"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    Instagram
-                  </a>
-                </div>
+                    <a
+                      href="https://www.facebook.com/belluxentertainment"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      Facebook
+                    </a>
+                  </div>
+                </aside>
               </div>
-            </div>
+            )}
           </div>
         </div>
       ) : null}
