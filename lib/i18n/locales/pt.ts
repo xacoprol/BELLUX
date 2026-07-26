@@ -327,6 +327,7 @@ export const pt: SiteContent = {
     accent2: "ficam.",
     sub: "Transformamos ideias em momentos de que as pessoas falam — e de que se lembram.",
     cta: "Ver projetos",
+    backHome: "Início",
     items: [
       {
         tag: "HOTÉIS",

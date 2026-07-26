@@ -327,6 +327,7 @@ export const en: SiteContent = {
     accent2: "stay with them.",
     sub: "We turn ideas into moments people actually talk about — and remember.",
     cta: "View our work",
+    backHome: "Home",
     items: [
       {
         tag: "HOTELS",

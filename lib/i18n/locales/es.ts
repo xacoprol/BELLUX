@@ -327,6 +327,7 @@ export const es: SiteContent = {
     accent2: "permanecen.",
     sub: "Convertimos ideas en momentos de los que la gente habla — y recuerda.",
     cta: "Ver proyectos",
+    backHome: "Inicio",
     items: [
       {
         tag: "HOTELES",

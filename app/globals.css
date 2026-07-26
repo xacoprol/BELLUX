@@ -690,7 +690,7 @@ body::before {
 /* ─── MANIFESTO ─── */
 .manifesto {
   background: var(--black);
-  padding: clamp(5rem, 12vw, 8.5rem) 0;
+  padding: clamp(7rem, 16vw, 12rem) 0;
   text-align: center;
 }
 
@@ -1214,7 +1214,7 @@ section.hero {
   position: relative;
   display: grid;
   grid-template-columns: repeat(var(--svc-per, 2), minmax(0, 1fr));
-  min-height: clamp(640px, 88vh, 860px);
+  min-height: clamp(720px, 92vh, 960px);
   border-top: 1px solid rgba(0, 0, 0, 0.08);
   background: #ffffff;
   overflow: hidden;
@@ -1229,8 +1229,13 @@ section.hero {
 }
 
 .svc-stage-img {
+  --svc-pad-top: clamp(8.5rem, 18vw, 12rem);
+  --svc-pad-bottom: clamp(4.5rem, 11vw, 7.5rem);
+  --svc-content-mid: calc(
+    var(--svc-pad-top) + (100% - var(--svc-pad-top) - var(--svc-pad-bottom)) / 2
+  );
   position: absolute;
-  top: 50%;
+  top: var(--svc-content-mid);
   left: 50%;
   width: min(44vw, 520px);
   aspect-ratio: 3 / 4;
@@ -1239,7 +1244,7 @@ section.hero {
   object-fit: cover;
   border-radius: 2px;
   opacity: 0;
-  /* Centered in section, biased toward the hovered slide */
+  /* Centered in content column height, biased toward the active slide */
   --svc-bias: calc(var(--svc-stage-bias, 0) * min(9vw, 110px));
   transform: translate(calc(-50% + var(--svc-bias)), -50%) scale(1.04);
   transition:
@@ -1258,8 +1263,8 @@ section.hero {
   display: flex;
   flex-direction: column;
   min-height: inherit;
-  padding: clamp(3.25rem, 8vw, 5.5rem) clamp(1.5rem, 4.5vw, 3.75rem)
-    clamp(3.25rem, 8vw, 5.5rem);
+  padding: clamp(8.5rem, 18vw, 12rem) clamp(1.5rem, 4.5vw, 3.75rem)
+    clamp(4.5rem, 11vw, 7.5rem);
   background: transparent;
   cursor: pointer;
 }
@@ -1461,8 +1466,13 @@ section.hero {
 
 @media (max-width: 767px) {
   .svc-slash { display: none; }
-  .svc-track { min-height: clamp(580px, 82vh, 760px); }
-  .svc-slide { padding-block: clamp(2.75rem, 10vw, 4.5rem); }
+  .svc-track { min-height: clamp(640px, 86vh, 840px); }
+  .svc-slide { padding-block: clamp(3.5rem, 12vw, 6rem); }
+  .svc-slide { padding-top: clamp(6.5rem, 18vw, 9.5rem); }
+  .svc-stage-img {
+    --svc-pad-top: clamp(6.5rem, 18vw, 9.5rem);
+    --svc-pad-bottom: clamp(3.5rem, 12vw, 6rem);
+  }
   .svc-slide-title {
     font-size: clamp(1.55rem, 7.8vw, 2.35rem);
     line-height: 1.24;
@@ -2003,6 +2013,121 @@ section.hero {
   }
 }
 
+/* ─── PROJECTS ARCHIVE PAGE ─── */
+.projects-page {
+  background: #050505;
+  color: var(--white);
+  padding-bottom: clamp(3rem, 8vw, 5rem);
+}
+
+.projects-page-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding:
+    clamp(1.1rem, 2.5vw, 1.6rem)
+    clamp(1.5rem, 5vw, 5rem);
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: rgba(5, 5, 5, 0.72);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.projects-page-links {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.projects-page-nav-end {
+  display: flex;
+  align-items: center;
+  gap: clamp(0.75rem, 2vw, 1.25rem);
+}
+
+.projects-page-nav-end .hero-pill--solid {
+  display: none;
+}
+
+@media (min-width: 900px) {
+  .projects-page-links {
+    display: flex;
+  }
+
+  .projects-page-nav .hero-burger {
+    display: none;
+  }
+
+  .projects-page-nav-end .hero-pill--solid {
+    display: inline-flex;
+  }
+}
+
+.projects-page-hero {
+  min-height: min(72vh, 720px);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 1.15rem;
+  padding:
+    clamp(3rem, 10vw, 7rem)
+    clamp(1.5rem, 5vw, 5rem)
+    clamp(3.5rem, 9vw, 6rem);
+  background:
+    radial-gradient(ellipse 70% 55% at 18% 20%, rgba(7, 193, 249, 0.12), transparent 55%),
+    radial-gradient(ellipse 55% 45% at 88% 70%, rgba(254, 2, 100, 0.1), transparent 50%),
+    #050505;
+}
+
+.projects-page-brand {
+  font-family: var(--display);
+  font-size: clamp(2.5rem, 8vw, 5.5rem);
+  line-height: 1.05;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+  color: var(--white);
+}
+
+.projects-page-hero .projects-headline {
+  max-width: 18ch;
+}
+
+.projects-page-hero .projects-sub {
+  max-width: 32rem;
+  margin-top: 0;
+}
+
+.projects-page-back {
+  margin-top: 0.5rem;
+  align-self: flex-start;
+  font-family: var(--sans);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.55);
+  transition: color 0.25s ease;
+}
+
+.projects-page-back:hover {
+  color: var(--white);
+}
+
+.projects-page-list {
+  padding-top: clamp(1rem, 3vw, 2rem);
+}
+
+@media (max-width: 720px) {
+  .projects-page-hero {
+    min-height: auto;
+    padding-top: clamp(2.5rem, 12vw, 4rem);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .proj-card-frame {
     transform: none !important;
@@ -2158,7 +2283,7 @@ section.hero {
   background: #0c0c0c;
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 16px;
-  padding: clamp(1.25rem, 3.5vw, 2.25rem);
+  padding: clamp(1.85rem, 5vw, 3.25rem);
   box-shadow: 0 40px 100px rgba(0, 0, 0, 0.55);
   animation: contactPanelIn 0.35s var(--ease-out);
   color: #fff;

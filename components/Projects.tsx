@@ -32,7 +32,7 @@ export default function Projects({
           video: p.video,
           accent: p.accent,
         }))
-      : t.projects.items;
+      : t.projects.items.slice(0, 3);
 
   useEffect(() => {
     const root = listRef.current;
@@ -104,7 +104,7 @@ export default function Projects({
           <p className="projects-sub">{t.projects.sub}</p>
         </div>
 
-        <Link href="#proyectos-list" className="projects-cta">
+        <Link href="/proyectos" className="projects-cta">
           {t.projects.cta}
         </Link>
       </div>

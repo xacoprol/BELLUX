@@ -146,6 +146,7 @@ export type SiteContent = {
     accent2: string;
     sub: string;
     cta: string;
+    backHome: string;
     items: Project[];
   };
   contact: {
