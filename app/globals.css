@@ -3013,3 +3013,116 @@ footer .wrap {
     letter-spacing: 0.1em;
   }
 }
+
+/* ─── MAINTENANCE ─── */
+.maintenance {
+  min-height: 100vh;
+  min-height: 100svh;
+  display: grid;
+  place-items: center;
+  padding: clamp(1.5rem, 5vw, 3rem);
+  background:
+    radial-gradient(ellipse 60% 45% at 20% 15%, rgba(7, 193, 249, 0.14), transparent 55%),
+    radial-gradient(ellipse 50% 40% at 85% 80%, rgba(254, 2, 100, 0.12), transparent 50%),
+    #080710;
+  color: var(--white);
+}
+
+.maintenance-panel {
+  width: min(100%, 26rem);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.maintenance-dots {
+  display: flex;
+  gap: 0.55rem;
+  margin-top: 1.25rem;
+}
+
+.maintenance-dots span {
+  width: 0.55rem;
+  height: 0.55rem;
+  border-radius: 50%;
+}
+
+.maintenance-dots span:nth-child(1) {
+  background: var(--cyan);
+}
+
+.maintenance-dots span:nth-child(2) {
+  background: var(--magenta);
+}
+
+.maintenance-dots span:nth-child(3) {
+  background: var(--yellow);
+}
+
+.maintenance-title {
+  font-family: var(--display);
+  font-weight: 400;
+  font-size: clamp(2.4rem, 8vw, 3.6rem);
+  line-height: 1.1;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+}
+
+.maintenance-sub {
+  font-family: var(--sans);
+  font-size: 0.98rem;
+  line-height: 1.55;
+  color: rgba(255, 255, 255, 0.72);
+  max-width: 28ch;
+}
+
+.maintenance-form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  margin-top: 0.75rem;
+}
+
+.maintenance-label {
+  font-family: var(--sans);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.55);
+}
+
+.maintenance-input {
+  width: 100%;
+  padding: 0.95rem 1rem;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--white);
+  font-family: var(--sans);
+  font-size: 1rem;
+  outline: none;
+}
+
+.maintenance-input:focus {
+  border-color: var(--cyan);
+}
+
+.maintenance-error {
+  font-size: 0.85rem;
+  color: var(--magenta);
+}
+
+.maintenance-submit {
+  margin-top: 0.5rem;
+  align-self: flex-start;
+  cursor: pointer;
+  border: none;
+}
+
+.maintenance-submit:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
