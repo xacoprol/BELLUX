@@ -266,6 +266,8 @@ export type WpClient = {
   id: number;
   title: string;
   logo: string;
+  /** silhouette = force white mark; knockout = invert so light bg disappears on dark */
+  logoTone: "silhouette" | "knockout";
 };
 
 type WpCliente = {
@@ -281,10 +283,17 @@ function mapCliente(post: WpCliente): WpClient | null {
   const title = stripHtml(post.title?.rendered || "");
   if (!title) return null;
   const media = post._embedded?.["wp:featuredmedia"]?.[0];
+  // Opaque light-backed marks (e.g. 3HB) break with brightness(0) invert
+  const logoTone =
+    /3hb/i.test(title) || /3hb/i.test(media?.source_url || "")
+      ? "knockout"
+      : "silhouette";
+
   return {
     id: post.id,
     title,
     logo: pickImage(media),
+    logoTone,
   };
 }
 

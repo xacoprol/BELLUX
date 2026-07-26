@@ -574,7 +574,7 @@ body::before {
 .hero-logo-item {
   font-family: var(--sans);
   font-weight: 600;
-  font-size: clamp(0.82rem, 1.5vw, 1.1rem);
+  font-size: clamp(1rem, 1.9vw, 1.35rem);
   letter-spacing: clamp(0.04em, 0.2vw, 0.08em);
   text-transform: uppercase;
   color: rgba(255, 255, 255, 0.62);
@@ -583,7 +583,7 @@ body::before {
   display: inline-flex;
   align-items: center;
   line-height: 1;
-  height: clamp(1.35rem, 2.4vw, 1.75rem);
+  height: clamp(2.4rem, 4.2vw, 3.25rem);
 }
 
 .hero-logo-item.has-logo {
@@ -595,10 +595,16 @@ body::before {
   display: block;
   height: 100%;
   width: auto;
-  max-width: 10rem;
+  max-width: 14rem;
   object-fit: contain;
   filter: brightness(0) invert(1);
   opacity: 0.72;
+}
+
+/* Dark mark on light/opaque bg — invert alone hides the bg on the dark hero */
+.hero-logo-img--knockout {
+  filter: invert(1);
+  opacity: 0.9;
 }
 
 @keyframes heroLogoScroll {

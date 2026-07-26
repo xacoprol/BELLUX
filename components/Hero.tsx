@@ -30,6 +30,7 @@ export default function Hero({ wpClients = [] }: { wpClients?: WpClient[] }) {
           id: i,
           title,
           logo: "",
+          logoTone: "silhouette" as const,
         }));
 
   const closeMenu = () => setMenuOpen(false);
@@ -165,7 +166,11 @@ export default function Hero({ wpClients = [] }: { wpClients?: WpClient[] }) {
                         <img
                           src={client.logo}
                           alt={client.title}
-                          className="hero-logo-img"
+                          className={`hero-logo-img${
+                            client.logoTone === "knockout"
+                              ? " hero-logo-img--knockout"
+                              : ""
+                          }`}
                           draggable={false}
                         />
                       ) : (
