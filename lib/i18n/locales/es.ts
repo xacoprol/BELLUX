@@ -328,6 +328,8 @@ export const es: SiteContent = {
     sub: "Convertimos ideas en momentos de los que la gente habla — y recuerda.",
     cta: "Ver proyectos",
     backHome: "Inicio",
+    playWithSound: "Reproducir con sonido",
+    muteVideo: "Silenciar vídeo",
     items: [
       {
         tag: "HOTELES",

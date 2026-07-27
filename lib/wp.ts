@@ -89,12 +89,16 @@ function stripHtml(html: string): string {
 
 function pickImage(media?: WpMedia): string {
   if (!media) return "";
+  // Featured video attachments are not cover images
+  if (media.mime_type?.startsWith("video/")) return "";
   const large = media.media_details?.sizes?.large?.source_url;
   const full = media.source_url;
   return large || full || "";
 }
 
-function pickVideoFromAcfOrMeta(post: WpProyecto): string | undefined {
+type VideoRef = { url?: string; id?: number };
+
+function pickVideoRef(post: WpProyecto): VideoRef {
   const bags: Array<Record<string, unknown> | undefined> = [
     post.acf,
     post.meta,
@@ -111,17 +115,28 @@ function pickVideoFromAcfOrMeta(post: WpProyecto): string | undefined {
     if (!bag) continue;
     for (const key of keys) {
       const val = bag[key];
+      if (typeof val === "number" && val > 0) return { id: val };
+      if (typeof val === "string" && /^\d+$/.test(val.trim())) {
+        return { id: Number(val.trim()) };
+      }
       if (typeof val === "string" && /\.(mp4|webm|mov)(\?|$)/i.test(val)) {
-        return val.startsWith("http") ? val : wpUrl(val);
+        return { url: val.startsWith("http") ? val : wpUrl(val) };
       }
       if (val && typeof val === "object") {
-        const obj = val as { url?: string; source_url?: string };
+        const obj = val as {
+          id?: number;
+          ID?: number;
+          url?: string;
+          source_url?: string;
+        };
+        if (typeof obj.id === "number" && obj.id > 0) return { id: obj.id };
+        if (typeof obj.ID === "number" && obj.ID > 0) return { id: obj.ID };
         const url = obj.url || obj.source_url;
-        if (url && /\.(mp4|webm|mov)(\?|$)/i.test(url)) return url;
+        if (url && /\.(mp4|webm|mov)(\?|$)/i.test(url)) return { url };
       }
     }
   }
-  return undefined;
+  return {};
 }
 
 function pickVideoFromContent(html?: string): string | undefined {
@@ -133,7 +148,51 @@ function pickVideoFromContent(html?: string): string | undefined {
   return src;
 }
 
-function mapProyecto(post: WpProyecto, index: number): WpProject {
+async function fetchMediaSourceUrl(id: number): Promise<string | undefined> {
+  try {
+    const res = await fetch(wpRest(`/wp/v2/media/${id}`), {
+      next: { revalidate: 300 },
+      headers: { Accept: "application/json" },
+    });
+    if (!res.ok) return undefined;
+    const data = (await res.json()) as WpMedia;
+    if (!data.source_url) return undefined;
+    if (data.mime_type && !data.mime_type.startsWith("video/")) {
+      return undefined;
+    }
+    return data.source_url;
+  } catch {
+    return undefined;
+  }
+}
+
+async function resolveProjectVideo(post: WpProyecto): Promise<string | undefined> {
+  const media = post._embedded?.["wp:featuredmedia"]?.[0];
+  const ref = pickVideoRef(post);
+
+  if (ref.url) return ref.url;
+  if (ref.id) {
+    const fromId = await fetchMediaSourceUrl(ref.id);
+    if (fromId) return fromId;
+  }
+
+  const fromContent = pickVideoFromContent(post.content?.rendered);
+  if (fromContent) return fromContent;
+
+  if (media?.mime_type?.startsWith("video/") && media.source_url) {
+    return media.source_url;
+  }
+
+  return undefined;
+}
+
+async function mapProyecto(
+  post: WpProyecto,
+  index: number
+): Promise<WpProject | null> {
+  const title = stripHtml(post.title?.rendered || "");
+  if (!title) return null;
+
   const media = post._embedded?.["wp:featuredmedia"]?.[0];
   const terms = (post._embedded?.["wp:term"] ?? []).flat();
   const category =
@@ -142,14 +201,11 @@ function mapProyecto(post: WpProyecto, index: number): WpProject {
     "";
 
   const image = pickImage(media);
-  const video =
-    pickVideoFromAcfOrMeta(post) ||
-    pickVideoFromContent(post.content?.rendered) ||
-    (media?.mime_type?.startsWith("video/") ? media.source_url : undefined);
+  const video = await resolveProjectVideo(post);
 
   return {
     id: post.id,
-    title: stripHtml(post.title?.rendered || ""),
+    title,
     description: stripHtml(post.excerpt?.rendered || ""),
     tag: category,
     image: image || "",
@@ -179,9 +235,8 @@ export async function getWpProjects(limit = 12): Promise<WpProject[]> {
     const data = (await res.json()) as WpProyecto[];
     if (!Array.isArray(data) || data.length === 0) return [];
 
-    return data
-      .map(mapProyecto)
-      .filter((p) => p.title);
+    const mapped = await Promise.all(data.map((post, i) => mapProyecto(post, i)));
+    return mapped.filter((p): p is WpProject => Boolean(p));
   } catch {
     return [];
   }

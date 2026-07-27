@@ -4,6 +4,7 @@ import { useEffect, useRef } from "react";
 import Link from "next/link";
 import { useLanguage } from "@/context/LanguageContext";
 import type { WpProject } from "@/lib/wp";
+import ProjectCardMedia from "./ProjectCardMedia";
 
 type ProjectItem = {
   title: string;
@@ -113,29 +114,13 @@ export default function Projects({
         {items.map((item) => (
           <article key={item.title} className="proj-card">
             <div className="proj-card-frame" data-proj-frame>
-              {item.video ? (
-                <video
-                  className="proj-card-media proj-card-media--video"
-                  src={item.video}
-                  poster={item.image || undefined}
-                  muted
-                  loop
-                  playsInline
-                  autoPlay
-                  aria-label={item.title}
-                />
-              ) : (
-                <div
-                  className="proj-card-media"
-                  style={
-                    item.image
-                      ? { backgroundImage: `url(${item.image})` }
-                      : undefined
-                  }
-                  role="img"
-                  aria-label={item.title}
-                />
-              )}
+              <ProjectCardMedia
+                title={item.title}
+                image={item.image}
+                video={item.video}
+                playLabel={t.projects.playWithSound}
+                muteLabel={t.projects.muteVideo}
+              />
               {item.tag ? (
                 <span
                   className={`proj-card-tag proj-card-tag--${item.accent ?? "cyan"}`}

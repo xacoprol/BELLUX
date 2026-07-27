@@ -328,6 +328,8 @@ export const en: SiteContent = {
     sub: "We turn ideas into moments people actually talk about — and remember.",
     cta: "View our work",
     backHome: "Home",
+    playWithSound: "Play with sound",
+    muteVideo: "Mute video",
     items: [
       {
         tag: "HOTELS",

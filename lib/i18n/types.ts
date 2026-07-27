@@ -147,6 +147,8 @@ export type SiteContent = {
     sub: string;
     cta: string;
     backHome: string;
+    playWithSound: string;
+    muteVideo: string;
     items: Project[];
   };
   contact: {
