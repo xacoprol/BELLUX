@@ -328,8 +328,10 @@ export const pt: SiteContent = {
     sub: "Transformamos ideias em momentos de que as pessoas falam — e de que se lembram.",
     cta: "Ver projetos",
     backHome: "Início",
-    playWithSound: "Reproduzir com som",
-    muteVideo: "Silenciar vídeo",
+    playWithSound: "Som",
+    muteVideo: "Mudo",
+    prevImage: "Imagem anterior",
+    nextImage: "Imagem seguinte",
     items: [
       {
         tag: "HOTÉIS",

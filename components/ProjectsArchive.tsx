@@ -14,6 +14,7 @@ type ProjectItem = {
   description: string;
   tag: string;
   image: string;
+  images: string[];
   video?: string;
   accent?: "cyan" | "magenta" | "yellow";
 };
@@ -41,10 +42,14 @@ export default function ProjectsArchive({
           description: p.description,
           tag: p.tag || t.projects.eyebrow,
           image: p.image,
+          images: p.images?.length ? p.images : p.image ? [p.image] : [],
           video: p.video,
           accent: p.accent,
         }))
-      : t.projects.items;
+      : t.projects.items.map((item) => ({
+          ...item,
+          images: item.image ? [item.image] : [],
+        }));
 
   const closeMenu = () => setMenuOpen(false);
 
@@ -198,9 +203,12 @@ export default function ProjectsArchive({
               <ProjectCardMedia
                 title={item.title}
                 image={item.image}
+                images={item.images}
                 video={item.video}
                 playLabel={t.projects.playWithSound}
                 muteLabel={t.projects.muteVideo}
+                prevLabel={t.projects.prevImage}
+                nextLabel={t.projects.nextImage}
               />
               {item.tag ? (
                 <span

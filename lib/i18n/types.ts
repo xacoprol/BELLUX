@@ -149,6 +149,8 @@ export type SiteContent = {
     backHome: string;
     playWithSound: string;
     muteVideo: string;
+    prevImage: string;
+    nextImage: string;
     items: Project[];
   };
   contact: {

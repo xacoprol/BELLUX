@@ -1921,73 +1921,179 @@ section.hero {
   isolation: isolate;
 }
 
+.proj-card-media-wrap--gallery {
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  background: #1a1a1a;
+}
+
+.proj-card-media-wrap--gallery .proj-card-media {
+  position: absolute;
+  inset: 0;
+  aspect-ratio: auto;
+  opacity: 0;
+  transition: opacity 0.55s var(--ease-out);
+}
+
+.proj-card-media-wrap--gallery .proj-card-slide.is-active {
+  opacity: 1;
+  z-index: 1;
+}
+
+.proj-slide-btn {
+  position: absolute;
+  top: 50%;
+  z-index: 4;
+  transform: translateY(-50%);
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 9999px;
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  background: rgba(8, 7, 16, 0.45);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  color: var(--white);
+  font-size: 1rem;
+  line-height: 1;
+  cursor: pointer;
+  opacity: 0;
+  transition:
+    opacity 0.25s ease,
+    background 0.25s ease,
+    color 0.25s ease,
+    transform 0.25s var(--ease-out);
+}
+
+.proj-card-media-wrap--gallery:hover .proj-slide-btn,
+.proj-slide-btn:focus-visible {
+  opacity: 1;
+}
+
+@media (hover: none) {
+  .proj-slide-btn {
+    opacity: 0.92;
+  }
+}
+
+.proj-slide-btn--prev {
+  left: 0.85rem;
+}
+
+.proj-slide-btn--next {
+  right: 0.85rem;
+}
+
+.proj-slide-btn:hover {
+  background: rgba(255, 255, 255, 0.92);
+  color: #0a0a0a;
+  transform: translateY(-50%) scale(1.05);
+}
+
+.proj-slide-dots {
+  position: absolute;
+  left: 50%;
+  bottom: 0.85rem;
+  z-index: 4;
+  display: flex;
+  gap: 0.35rem;
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+
+.proj-slide-dot {
+  width: 0.35rem;
+  height: 0.35rem;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.35);
+}
+
+.proj-slide-dot.is-active {
+  background: var(--yellow);
+}
+
 .proj-card-media--video {
   pointer-events: none;
 }
 
-.proj-play {
+.proj-sound {
   position: absolute;
-  inset: 0;
-  z-index: 3;
-  display: grid;
-  place-items: center;
+  top: 0.85rem;
+  right: 0.85rem;
+  z-index: 4;
   margin: 0;
   padding: 0;
   border: 0;
   background: transparent;
   cursor: pointer;
   opacity: 0;
-  transition: opacity 0.28s var(--ease-out);
+  transform: translateY(4px);
+  transition:
+    opacity 0.25s ease,
+    transform 0.25s var(--ease-out);
 }
 
-.proj-card-media-wrap:hover .proj-play,
-.proj-card-media-wrap.is-unmuted .proj-play,
-.proj-play:focus-visible {
+.proj-card-media-wrap--video:hover .proj-sound,
+.proj-card-media-wrap--video.is-unmuted .proj-sound,
+.proj-sound:focus-visible {
   opacity: 1;
+  transform: translateY(0);
 }
 
 @media (hover: none) {
-  .proj-play {
-    opacity: 0.9;
+  .proj-sound {
+    opacity: 0.95;
+    transform: none;
   }
 }
 
-.proj-play-ring {
-  display: grid;
-  place-items: center;
-  width: clamp(3.4rem, 6vw, 4.4rem);
-  height: clamp(3.4rem, 6vw, 4.4rem);
+.proj-sound-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.45rem 0.75rem 0.45rem 0.55rem;
   border-radius: 9999px;
-  border: 1px solid rgba(255, 255, 255, 0.88);
-  background: rgba(8, 7, 16, 0.42);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  background: rgba(8, 7, 16, 0.5);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   color: var(--white);
+  font-family: var(--sans);
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
   transition:
-    transform 0.28s var(--ease-out),
-    background 0.28s ease,
-    border-color 0.28s ease;
+    background 0.25s ease,
+    color 0.25s ease,
+    border-color 0.25s ease;
 }
 
-.proj-play:hover .proj-play-ring {
-  transform: scale(1.06);
-  background: rgba(255, 255, 255, 0.92);
+.proj-sound:hover .proj-sound-chip {
+  background: rgba(255, 255, 255, 0.94);
   color: #0a0a0a;
   border-color: var(--white);
 }
 
-.proj-card-media-wrap.is-unmuted .proj-play-ring {
+.proj-card-media-wrap--video.is-unmuted .proj-sound-chip {
   border-color: var(--magenta);
 }
 
-.proj-play-icon {
-  width: 1.35rem;
-  height: 1.35rem;
-  margin-left: 0.12rem;
+.proj-card-media-wrap--video.is-unmuted .proj-sound:hover .proj-sound-chip {
+  border-color: var(--magenta);
 }
 
-.proj-card-media-wrap.is-unmuted .proj-play-icon {
-  margin-left: 0;
+.proj-sound-icon {
+  width: 0.95rem;
+  height: 0.95rem;
+  flex-shrink: 0;
+}
+
+.proj-sound-label {
+  line-height: 1;
+  max-width: 9ch;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .proj-card-tag {

@@ -40,6 +40,7 @@ export type WpProject = {
   description: string;
   tag: string;
   image: string;
+  images: string[];
   video?: string;
   accent: "cyan" | "magenta" | "yellow";
 };
@@ -166,6 +167,45 @@ async function fetchMediaSourceUrl(id: number): Promise<string | undefined> {
   }
 }
 
+function pickGalleryImageUrl(media: WpMedia): string {
+  if (media.mime_type?.startsWith("video/")) return "";
+  const large = media.media_details?.sizes?.large?.source_url;
+  const full = media.source_url;
+  return large || full || "";
+}
+
+/** Attached image gallery for a proyecto (excludes videos). */
+async function fetchProjectGallery(postId: number): Promise<string[]> {
+  try {
+    const url = wpRest("/wp/v2/media", {
+      parent: String(postId),
+      per_page: "40",
+      media_type: "image",
+      orderby: "date",
+      order: "asc",
+    });
+    const res = await fetch(url, {
+      next: { revalidate: 300 },
+      headers: { Accept: "application/json" },
+    });
+    if (!res.ok) return [];
+    const data = (await res.json()) as WpMedia[];
+    if (!Array.isArray(data)) return [];
+
+    const seen = new Set<string>();
+    const urls: string[] = [];
+    for (const item of data) {
+      const src = pickGalleryImageUrl(item);
+      if (!src || seen.has(src)) continue;
+      seen.add(src);
+      urls.push(src);
+    }
+    return urls;
+  } catch {
+    return [];
+  }
+}
+
 async function resolveProjectVideo(post: WpProyecto): Promise<string | undefined> {
   const media = post._embedded?.["wp:featuredmedia"]?.[0];
   const ref = pickVideoRef(post);
@@ -200,15 +240,26 @@ async function mapProyecto(
     terms[0]?.name ||
     "";
 
-  const image = pickImage(media);
-  const video = await resolveProjectVideo(post);
+  const featured = pickImage(media);
+  const [gallery, video] = await Promise.all([
+    fetchProjectGallery(post.id),
+    resolveProjectVideo(post),
+  ]);
+
+  const images =
+    gallery.length > 0
+      ? gallery
+      : featured
+        ? [featured]
+        : [];
 
   return {
     id: post.id,
     title,
     description: stripHtml(post.excerpt?.rendered || ""),
     tag: category,
-    image: image || "",
+    image: featured || images[0] || "",
+    images,
     video: video || undefined,
     accent: ACCENTS[index % ACCENTS.length],
   };
