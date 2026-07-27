@@ -426,9 +426,9 @@ export const pt: SiteContent = {
     cookies: "Cookies",
   },
   cookiesBanner: {
-    title: "Utilizamos cookies",
-    text: "Usamos cookies necessários para o site funcionar e, com o seu consentimento, cookies de preferências, análise e marketing. Pode aceitar, rejeitar ou gerir as suas escolhas.",
-    policy: "Política de cookies",
+    title: "Cookies",
+    text: "Usamos cookies necessárias e, com o seu consentimento, outras. Pode aceitar, rejeitar ou gerir.",
+    policy: "Saber mais",
     accept: "Aceitar",
     reject: "Rejeitar",
     settings: "Ajustes",

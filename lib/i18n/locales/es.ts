@@ -425,9 +425,9 @@ export const es: SiteContent = {
     cookies: "Cookies",
   },
   cookiesBanner: {
-    title: "Utilizamos cookies",
-    text: "Usamos cookies necesarios para que el sitio funcione y, con su consentimiento, cookies de preferencias, análisis y marketing. Puede aceptar, rechazar o gestionar sus opciones.",
-    policy: "Política de cookies",
+    title: "Cookies",
+    text: "Usamos cookies necesarias y, con su consentimiento, otras. Puede aceptar, rechazar o gestionar.",
+    policy: "Saber más",
     accept: "Aceptar",
     reject: "Rechazar",
     settings: "Ajustes",

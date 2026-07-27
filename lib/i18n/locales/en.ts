@@ -425,9 +425,9 @@ export const en: SiteContent = {
     cookies: "Cookies",
   },
   cookiesBanner: {
-    title: "We use cookies",
-    text: "We use necessary cookies to make the site work and, with your consent, preference, analytics and marketing cookies. You can accept, reject or manage your choices.",
-    policy: "Cookies policy",
+    title: "Cookies",
+    text: "We use necessary cookies and, with your consent, others. Accept, reject or manage.",
+    policy: "Learn more",
     accept: "Accept",
     reject: "Reject",
     settings: "Settings",
