@@ -15,11 +15,15 @@ declare global {
   }
 }
 
-function disableGa() {
+function setGaDisabled(disabled: boolean) {
   if (typeof window === "undefined") return;
-  (window as Window & Record<string, boolean>)[
+  (window as unknown as Record<string, boolean>)[
     `ga-disable-${GA_MEASUREMENT_ID}`
-  ] = true;
+  ] = disabled;
+}
+
+function disableGa() {
+  setGaDisabled(true);
   window.gtag?.("consent", "update", {
     analytics_storage: "denied",
     ad_storage: "denied",
@@ -29,10 +33,7 @@ function disableGa() {
 }
 
 function enableGa() {
-  if (typeof window === "undefined") return;
-  (window as Window & Record<string, boolean>)[
-    `ga-disable-${GA_MEASUREMENT_ID}`
-  ] = false;
+  setGaDisabled(false);
   window.gtag?.("consent", "update", {
     analytics_storage: "granted",
   });
