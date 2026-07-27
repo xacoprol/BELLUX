@@ -1764,7 +1764,8 @@ section.hero {
 .ig-rail {
   display: flex;
   width: max-content;
-  animation: igRailScroll 55s linear infinite;
+  animation: igRailScroll 60s linear infinite;
+  will-change: transform;
 }
 
 .ig-rail-wrap:hover .ig-rail {
@@ -1774,14 +1775,14 @@ section.hero {
 .ig-rail-group {
   display: flex;
   align-items: stretch;
-  gap: clamp(0.75rem, 1.5vw, 1rem);
-  padding-right: clamp(0.75rem, 1.5vw, 1rem);
+  gap: 1rem;
+  padding-right: 1rem;
   flex-shrink: 0;
 }
 
 .ig-card {
-  flex: 0 0 auto;
-  width: min(42vw, 260px);
+  flex: 0 0 220px;
+  width: 220px;
   display: flex;
   flex-direction: column;
   gap: 0.55rem;
@@ -1801,12 +1802,20 @@ section.hero {
   color: rgba(10, 10, 10, 0.45);
 }
 
-.ig-card img {
+.ig-card-media {
   width: 100%;
-  height: clamp(280px, 36vw, 360px);
-  object-fit: cover;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
   border: 1px solid rgba(0, 0, 0, 0.08);
   border-radius: 6px 6px 0 0;
+  background: #111;
+}
+
+.ig-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
   display: block;
   filter: grayscale(1);
   transition: filter 0.35s ease, transform 0.35s ease;
@@ -1838,11 +1847,13 @@ section.hero {
   }
 
   .ig-card {
-    width: min(78vw, 17.5rem);
+    flex: 0 0 180px;
+    width: 180px;
   }
 
-  .ig-card img {
-    height: clamp(240px, 58vw, 300px);
+  .ig-rail-group {
+    gap: 0.75rem;
+    padding-right: 0.75rem;
   }
 }
 
@@ -3826,10 +3837,6 @@ footer .wrap {
 
   .ig-head {
     margin-bottom: 1.75rem;
-  }
-
-  .ig-card {
-    width: min(72vw, 16rem);
   }
 
   .title {

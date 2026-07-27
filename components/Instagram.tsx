@@ -47,7 +47,8 @@ export default function Instagram({
 
       <div className="ig-rail-wrap">
         <div className="ig-rail" role="list">
-          {Array.from({ length: 2 }, (_, loop) => (
+          {/* Two identical groups → seamless -50% loop */}
+          {[0, 1].map((loop) => (
             <div className="ig-rail-group" key={loop} aria-hidden={loop > 0}>
               {posts.map((post) => (
                 <a
@@ -56,19 +57,21 @@ export default function Instagram({
                   target="_blank"
                   rel="noopener noreferrer"
                   className="ig-card"
-                  role="listitem"
+                  role={loop === 0 ? "listitem" : undefined}
                 >
                   <div className="ig-card-meta">
                     <span>{post.year}</span>
                     <span>{post.place}</span>
                   </div>
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src={post.image}
-                    alt=""
-                    loading="lazy"
-                    draggable={false}
-                  />
+                  <div className="ig-card-media">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={post.image}
+                      alt=""
+                      loading="lazy"
+                      draggable={false}
+                    />
+                  </div>
                 </a>
               ))}
             </div>
