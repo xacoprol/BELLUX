@@ -212,7 +212,7 @@ export const en: SiteContent = {
     next: "Next",
     items: [
       {
-        tag: "FOR HOTELS",
+        tag: "HOTEL ENTERTAINMENT",
         lines: [
           [{ text: "HOTEL" }],
           [{ text: "ENTERTAINMENT", accent: "cyan" }],
@@ -223,7 +223,7 @@ export const en: SiteContent = {
           "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1200&q=80",
       },
       {
-        tag: "FOR EVENTS",
+        tag: "AERIAL SHOW",
         lines: [
           [{ text: "AERIAL" }],
           [{ text: "SHOWS", accent: "yellow" }],
@@ -234,7 +234,7 @@ export const en: SiteContent = {
           "https://images.unsplash.com/photo-1683169056212-0e1a7abbe7c6?auto=format&fit=crop&w=1200&q=80",
       },
       {
-        tag: "FOR FAMILIES",
+        tag: "FAMILY CIRCUS",
         lines: [
           [{ text: "CIRCUS" }],
           [{ text: "FOR ALL", accent: "magenta" }],
@@ -244,7 +244,7 @@ export const en: SiteContent = {
           "https://images.unsplash.com/photo-1503095396549-807759245b35?auto=format&fit=crop&w=1200&q=80",
       },
       {
-        tag: "FOR SEASON",
+        tag: "CHRISTMAS SHOWS",
         lines: [
           [{ text: "CHRISTMAS &" }],
           [{ text: "THEMED", accent: "cyan" }],
@@ -255,7 +255,7 @@ export const en: SiteContent = {
           "https://images.unsplash.com/photo-1765694281917-0897f782181e?auto=format&fit=crop&w=1200&q=80",
       },
       {
-        tag: "FOR STAGE",
+        tag: "LIVE PERFORMANCE",
         lines: [
           [{ text: "THEATRE," }],
           [{ text: "DANCE", accent: "yellow" }],
@@ -266,7 +266,7 @@ export const en: SiteContent = {
           "https://images.unsplash.com/photo-1507676184212-d03ab07a01bf?auto=format&fit=crop&w=1200&q=80",
       },
       {
-        tag: "FOR BRANDS",
+        tag: "FULL PRODUCTION",
         lines: [
           [{ text: "LARGE-SCALE" }],
           [{ text: "EVENTS", accent: "magenta" }],

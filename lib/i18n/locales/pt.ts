@@ -212,7 +212,7 @@ export const pt: SiteContent = {
     next: "Seguinte",
     items: [
       {
-        tag: "PARA HOTÉIS",
+        tag: "ANIMAÇÃO TURÍSTICA",
         lines: [
           [{ text: "ANIMAÇÃO" }],
           [{ text: "TURÍSTICA", accent: "cyan" }],
@@ -223,7 +223,7 @@ export const pt: SiteContent = {
           "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1200&q=80",
       },
       {
-        tag: "PARA EVENTOS",
+        tag: "SHOW AÉREO",
         lines: [
           [{ text: "ESPETÁCULOS" }],
           [{ text: "AÉREOS", accent: "yellow" }],
@@ -234,7 +234,7 @@ export const pt: SiteContent = {
           "https://images.unsplash.com/photo-1683169056212-0e1a7abbe7c6?auto=format&fit=crop&w=1200&q=80",
       },
       {
-        tag: "PARA FAMÍLIAS",
+        tag: "CIRCO FAMILIAR",
         lines: [
           [{ text: "CIRCO" }],
           [{ text: "PARA TODAS", accent: "magenta" }],
@@ -244,7 +244,7 @@ export const pt: SiteContent = {
           "https://images.unsplash.com/photo-1503095396549-807759245b35?auto=format&fit=crop&w=1200&q=80",
       },
       {
-        tag: "PARA ÉPOCA",
+        tag: "NATAL TEMÁTICO",
         lines: [
           [{ text: "NATAL &" }],
           [{ text: "SHOWS", accent: "cyan" }],
@@ -255,7 +255,7 @@ export const pt: SiteContent = {
           "https://images.unsplash.com/photo-1765694281917-0897f782181e?auto=format&fit=crop&w=1200&q=80",
       },
       {
-        tag: "PARA PALCO",
+        tag: "ARTES AO VIVO",
         lines: [
           [{ text: "TEATRO," }],
           [{ text: "DANÇA", accent: "yellow" }],
@@ -266,7 +266,7 @@ export const pt: SiteContent = {
           "https://images.unsplash.com/photo-1507676184212-d03ab07a01bf?auto=format&fit=crop&w=1200&q=80",
       },
       {
-        tag: "PARA MARCAS",
+        tag: "PRODUÇÃO INTEGRAL",
         lines: [
           [{ text: "GRANDES" }],
           [{ text: "EVENTOS", accent: "magenta" }],
