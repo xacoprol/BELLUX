@@ -69,7 +69,7 @@ const cookieTablePt: LegalTable = {
       "Analíticos",
     ],
     [
-      "_ga_*",
+      "_ga_CDPPECXSK8",
       "Google LLC (Google Analytics 4)",
       "Mantém o estado da sessão e calcula métricas de visita no GA4.",
       "Cookie de terceiros / HTTP",
@@ -85,7 +85,7 @@ const cookieTablePt: LegalTable = {
       "Analíticos",
     ],
   ],
-  note: "Os cookies de Google Analytics (_ga, _ga_*, _gid) só são ativados se aceitar a categoria «Analíticos». O nome exacto _ga_* depende do ID de medição GA4 (por exemplo _ga_XXXX). Não utilizamos atualmente cookies de marketing próprios; se no futuro forem ativados, esta tabela será atualizada.",
+  note: "Os cookies de Google Analytics (_ga, _ga_CDPPECXSK8, _gid) só são ativados se aceitar a categoria «Analíticos» (ID G-CDPPECXSK8). Não utilizamos atualmente cookies de marketing próprios; se no futuro forem ativados, esta tabela será atualizada.",
 };
 
 const cookieTableEs: LegalTable = {
@@ -123,7 +123,7 @@ const cookieTableEs: LegalTable = {
       "Analíticas",
     ],
     [
-      "_ga_*",
+      "_ga_CDPPECXSK8",
       "Google LLC (Google Analytics 4)",
       "Mantiene el estado de la sesión y calcula métricas de visita en GA4.",
       "Cookie de terceros / HTTP",
@@ -139,7 +139,7 @@ const cookieTableEs: LegalTable = {
       "Analíticas",
     ],
   ],
-  note: "Las cookies de Google Analytics (_ga, _ga_*, _gid) solo se activan si acepta la categoría «Analíticas». El nombre exacto _ga_* depende del ID de medición GA4 (por ejemplo _ga_XXXX). No usamos actualmente cookies de marketing propias; si en el futuro se activan, esta tabla se actualizará.",
+  note: "Las cookies de Google Analytics (_ga, _ga_CDPPECXSK8, _gid) solo se activan si acepta la categoría «Analíticas» (ID G-CDPPECXSK8). No usamos actualmente cookies de marketing propias; si en el futuro se activan, esta tabla se actualizará.",
 };
 
 const cookieTableEn: LegalTable = {
@@ -177,7 +177,7 @@ const cookieTableEn: LegalTable = {
       "Analytics",
     ],
     [
-      "_ga_*",
+      "_ga_CDPPECXSK8",
       "Google LLC (Google Analytics 4)",
       "Keeps session state and calculates visit metrics in GA4.",
       "Third-party / HTTP cookie",
@@ -193,7 +193,7 @@ const cookieTableEn: LegalTable = {
       "Analytics",
     ],
   ],
-  note: "Google Analytics cookies (_ga, _ga_*, _gid) are only enabled if you accept the “Analytics” category. The exact _ga_* name depends on your GA4 measurement ID (e.g. _ga_XXXX). We do not currently use our own marketing cookies; if they are enabled later, this table will be updated.",
+  note: "Google Analytics cookies (_ga, _ga_CDPPECXSK8, _gid) are only enabled if you accept the “Analytics” category (ID G-CDPPECXSK8). We do not currently use our own marketing cookies; if they are enabled later, this table will be updated.",
 };
 
 const avisoPt: LegalDoc = {

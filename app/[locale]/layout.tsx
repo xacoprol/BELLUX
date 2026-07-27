@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { LanguageProvider } from "@/context/LanguageContext";
 import PageEffects from "@/components/PageEffects";
 import CookieBanner from "@/components/CookieBanner";
+import GoogleAnalytics from "@/components/GoogleAnalytics";
 import { content } from "@/lib/i18n/content";
 import { isLocale, locales } from "@/lib/i18n/routing";
 import type { Locale } from "@/lib/i18n/types";
@@ -53,6 +54,7 @@ export default async function LocaleLayout({
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
       <PageEffects />
+      <GoogleAnalytics />
       <CookieBanner />
       {children}
     </LanguageProvider>
