@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState, type CSSProperties } from "react";
+import { useEffect, useRef, useState, type CSSProperties, type TouchEvent } from "react";
 import { useLanguage } from "@/context/LanguageContext";
 import type { WpService } from "@/lib/wp";
 
@@ -30,6 +30,9 @@ export default function Services({
   const flashingRef = useRef(flashing);
   const maxIndexRef = useRef(0);
   const focusColRef = useRef(0);
+  const touchStartX = useRef(0);
+  const touchStartY = useRef(0);
+  const touchActive = useRef(false);
 
   useEffect(() => {
     const sync = () => setPerView(window.innerWidth < 768 ? 1 : 2);
@@ -83,6 +86,36 @@ export default function Services({
     flashTo(next);
   };
 
+  const onTouchStart = (e: TouchEvent) => {
+    const t = e.touches[0];
+    if (!t) return;
+    touchActive.current = true;
+    touchStartX.current = t.clientX;
+    touchStartY.current = t.clientY;
+    setPaused(true);
+  };
+
+  const onTouchEnd = (e: TouchEvent) => {
+    if (!touchActive.current) return;
+    touchActive.current = false;
+    const t = e.changedTouches[0];
+    setPaused(false);
+    if (!t || pageCount <= 1) return;
+
+    const dx = t.clientX - touchStartX.current;
+    const dy = t.clientY - touchStartY.current;
+    if (Math.abs(dx) < 48) return;
+    if (Math.abs(dx) < Math.abs(dy) * 1.15) return;
+
+    // swipe left → next, swipe right → previous
+    go(dx < 0 ? 1 : -1);
+  };
+
+  const onTouchCancel = () => {
+    touchActive.current = false;
+    setPaused(false);
+  };
+
   const visible = items.slice(index, index + perView);
 
   // Autoplay: left photo → right photo → next page (nunca vuelve a la izquierda)
@@ -129,6 +162,9 @@ export default function Services({
           setPaused(false);
           setHoverCol(null);
         }}
+        onTouchStart={onTouchStart}
+        onTouchEnd={onTouchEnd}
+        onTouchCancel={onTouchCancel}
       >
         <div className="svc-flash" aria-hidden="true" />
 

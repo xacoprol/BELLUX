@@ -61,13 +61,12 @@ export default function ProjectsArchive({
     const reduceMotion = window.matchMedia(
       "(prefers-reduced-motion: reduce)"
     ).matches;
-    const isNarrow = window.matchMedia("(max-width: 767px)").matches;
 
     const frames = Array.from(
       root.querySelectorAll<HTMLElement>("[data-proj-frame]")
     );
 
-    if (reduceMotion || isNarrow) {
+    if (reduceMotion) {
       frames.forEach((frame) => {
         frame.style.transform = "none";
         frame.style.opacity = "1";
@@ -81,18 +80,20 @@ export default function ProjectsArchive({
     const update = () => {
       if (!alive) return;
       const vh = window.innerHeight;
+      const narrow = window.innerWidth < 768;
 
       frames.forEach((frame) => {
         const rect = frame.getBoundingClientRect();
-        const start = vh * 1.35;
-        const end = vh * 0.1;
+        // Same “rise from below” feel as home; slightly softer on mobile
+        const start = vh * (narrow ? 1.45 : 1.35);
+        const end = vh * (narrow ? 0.02 : 0.1);
         const raw = (start - rect.top) / (start - end);
         const p = Math.min(1, Math.max(0, raw));
-        const eased = 1 - Math.pow(1 - p, 2);
-        const tilt = (1 - eased) * 48;
-        const scale = 0.78 + eased * 0.22;
-        const y = (1 - eased) * 96;
-        const opacity = 0.35 + eased * 0.65;
+        const eased = 1 - Math.pow(1 - p, narrow ? 2.1 : 2);
+        const tilt = (1 - eased) * (narrow ? 72 : 48);
+        const scale = (narrow ? 0.66 : 0.78) + eased * (narrow ? 0.34 : 0.22);
+        const y = (1 - eased) * (narrow ? 180 : 96);
+        const opacity = (narrow ? 0.1 : 0.35) + eased * (narrow ? 0.9 : 0.65);
 
         frame.style.transform = `perspective(900px) rotateX(${tilt}deg) scale(${scale}) translateY(${y}px)`;
         frame.style.opacity = String(opacity);
