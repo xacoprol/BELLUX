@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Boldonse, Inter } from "next/font/google";
 import { LanguageProvider } from "@/context/LanguageContext";
 import "./globals.css";
@@ -22,6 +22,13 @@ export const metadata: Metadata = {
   title: "Bellux Entertainment",
   description:
     "Mais de 15 anos de experiência em animação, entretenimento e produção de espetáculos no Algarve, Portugal e Espanha.",
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
+  themeColor: "#080710",
 };
 
 export default function RootLayout({
