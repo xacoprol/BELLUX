@@ -16,7 +16,7 @@ export default function Hero({ wpClients = [] }: { wpClients?: WpClient[] }) {
   const navLinks = [
     { href: localePath(locale, "/#sobre"), label: t.nav.about },
     { href: localePath(locale, "/#servicios"), label: t.nav.services },
-    { href: localePath(locale, "/#proyectos"), label: t.nav.projects },
+    { href: localePath(locale, "/proyectos"), label: t.nav.projects },
     { href: "#contacto", label: t.nav.contact },
   ];
 
@@ -82,7 +82,7 @@ export default function Hero({ wpClients = [] }: { wpClients?: WpClient[] }) {
         </nav>
 
         <div className="hero-nav-end">
-          <div className="lang hero-lang">
+          <div className="lang">
             {locales.map((lang, i) => (
               <span key={lang} style={{ display: "contents" }}>
                 {i > 0 && <span className="lang-sep">/</span>}

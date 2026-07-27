@@ -673,8 +673,9 @@ body::before {
     min-height: 2.75rem;
   }
 
-  .hero-lang {
-    display: none;
+  .hero-nav-end .lang button {
+    min-height: 2rem;
+    padding: 0.35rem 0.45rem;
   }
 
   .hero-content {

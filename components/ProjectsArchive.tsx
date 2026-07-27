@@ -32,7 +32,7 @@ export default function ProjectsArchive({
   const navLinks = [
     { href: localePath(locale, "/#sobre"), label: t.nav.about },
     { href: localePath(locale, "/#servicios"), label: t.nav.services },
-    { href: localePath(locale, "/#proyectos"), label: t.nav.projects },
+    { href: localePath(locale, "/proyectos"), label: t.nav.projects },
     { href: "#contacto", label: t.nav.contact },
   ];
 
