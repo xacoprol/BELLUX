@@ -62,7 +62,7 @@ export default function ProjectCardMedia({
     if (!useGallery || paused || gallery.length < 2) return;
     const id = window.setInterval(() => {
       setSlide((s) => (s + 1) % gallery.length);
-    }, 4000);
+    }, 1000);
     return () => window.clearInterval(id);
   }, [useGallery, paused, gallery.length]);
 

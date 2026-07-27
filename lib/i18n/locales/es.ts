@@ -231,7 +231,7 @@ export const es: SiteContent = {
           [{ text: "EL ESCENARIO", accent: "cyan" }],
         ],
         image:
-          "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=1200&q=80",
+          "https://images.unsplash.com/photo-1683169056212-0e1a7abbe7c6?auto=format&fit=crop&w=1200&q=80",
       },
       {
         tag: "PARA FAMILIAS",
@@ -252,7 +252,7 @@ export const es: SiteContent = {
           [{ text: "A MEDIDA" }],
         ],
         image:
-          "https://images.unsplash.com/photo-1482517969863-f23c920ce9ca?auto=format&fit=crop&w=1200&q=80",
+          "https://images.unsplash.com/photo-1765694281917-0897f782181e?auto=format&fit=crop&w=1200&q=80",
       },
       {
         tag: "PARA ESCENARIO",
