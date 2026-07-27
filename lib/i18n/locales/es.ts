@@ -420,6 +420,36 @@ export const es: SiteContent = {
   footer: {
     copy: "© 2026 Bellux Entertainment",
     note: "Animación, entretenimiento y producción de espectáculos",
+    legal: "Aviso legal",
+    privacy: "Privacidad",
+    cookies: "Cookies",
+  },
+  cookiesBanner: {
+    title: "Utilizamos cookies",
+    text: "Usamos cookies necesarios para que el sitio funcione y, con su consentimiento, cookies de preferencias, análisis y marketing. Puede aceptar, rechazar o gestionar sus opciones.",
+    policy: "Política de cookies",
+    accept: "Aceptar",
+    reject: "Rechazar",
+    settings: "Ajustes",
+    settingsTitle: "Preferencias de cookies",
+    settingsIntro:
+      "Elija las categorías que autoriza. Las cookies necesarias están siempre activas.",
+    save: "Guardar",
+    close: "Cerrar",
+    alwaysOn: "Siempre activas",
+    necessaryTitle: "Necesarias",
+    necessaryText:
+      "Garantizan el funcionamiento básico del sitio, la seguridad y la gestión del consentimiento.",
+    preferencesTitle: "Preferencias",
+    preferencesText:
+      "Recuerdan opciones como el idioma o ajustes de su experiencia.",
+    analyticsTitle: "Analíticas",
+    analyticsText:
+      "Ayudan a entender, de forma agregada, cómo se usa el sitio para mejorarlo.",
+    marketingTitle: "Marketing",
+    marketingText:
+      "Pueden usarse para medir campañas o contenidos de redes sociales de terceros.",
+    manage: "Gestionar cookies",
   },
   ui: {
     readMore: "Leer más",

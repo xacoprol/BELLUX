@@ -1,10 +1,19 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
+import { usePathname } from "next/navigation";
 import Lenis from "lenis";
 
 export default function PageEffects() {
+  const pathname = usePathname();
+  const lenisRef = useRef<Lenis | null>(null);
+  const ioRef = useRef<IntersectionObserver | null>(null);
+
   useEffect(() => {
+    if ("scrollRestoration" in history) {
+      history.scrollRestoration = "manual";
+    }
+
     const io = new IntersectionObserver(
       (entries) => {
         entries.forEach((e) => {
@@ -13,8 +22,14 @@ export default function PageEffects() {
       },
       { threshold: 0.12 }
     );
+    ioRef.current = io;
 
-    document.querySelectorAll("[data-r]").forEach((el) => io.observe(el));
+    const observeReveal = () => {
+      document.querySelectorAll("[data-r]:not(.in)").forEach((el) => {
+        io.observe(el);
+      });
+    };
+    observeReveal();
 
     const reduceMotion = window.matchMedia(
       "(prefers-reduced-motion: reduce)"
@@ -30,6 +45,7 @@ export default function PageEffects() {
         smoothWheel: true,
         touchMultiplier: 1.1,
       });
+      lenisRef.current = lenis;
 
       const raf = (time: number) => {
         lenis?.raf(time);
@@ -75,11 +91,57 @@ export default function PageEffects() {
 
     return () => {
       io.disconnect();
+      ioRef.current = null;
       document.removeEventListener("click", onClick);
       cancelAnimationFrame(rafId);
       lenis?.destroy();
+      lenisRef.current = null;
     };
   }, []);
+
+  // New route → top of page (keep position only for in-page #hashes)
+  useEffect(() => {
+    const hash = window.location.hash;
+    if (hash && hash.length > 1) {
+      const el = document.querySelector(hash);
+      if (el) {
+        const offset =
+          parseInt(
+            getComputedStyle(document.documentElement).scrollPaddingTop || "0",
+            10
+          ) || 0;
+        const lenis = lenisRef.current;
+        requestAnimationFrame(() => {
+          if (lenis) {
+            lenis.scrollTo(el as HTMLElement, {
+              offset: -offset,
+              immediate: true,
+            });
+          } else {
+            const top =
+              el.getBoundingClientRect().top + window.scrollY - offset;
+            window.scrollTo(0, top);
+          }
+        });
+      }
+      return;
+    }
+
+    const lenis = lenisRef.current;
+    if (lenis) {
+      lenis.scrollTo(0, { immediate: true });
+    } else {
+      window.scrollTo(0, 0);
+    }
+
+    // Re-observe reveal elements on the new page
+    const io = ioRef.current;
+    if (io) {
+      document.querySelectorAll("[data-r]:not(.in)").forEach((el) => {
+        io.observe(el);
+      });
+    }
+  }, [pathname]);
 
   return null;
 }

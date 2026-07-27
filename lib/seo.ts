@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import type { Locale } from "@/lib/i18n/types";
 import { defaultLocale, localePath, locales } from "@/lib/i18n/routing";
+import { company } from "@/lib/company";
 
 export const SITE_URL = (
   process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") ||
@@ -86,8 +87,18 @@ export function organizationJsonLd() {
     "@context": "https://schema.org",
     "@type": "Organization",
     name: SITE_NAME,
+    legalName: company.legalName,
+    taxID: company.nif,
     url: SITE_URL,
     logo: absoluteUrl("/assets/images/logo.png"),
+    address: {
+      "@type": "PostalAddress",
+      streetAddress: company.addressLine,
+      postalCode: company.postalCode,
+      addressLocality: company.city,
+      addressCountry: "PT",
+    },
+    telephone: company.phone,
     sameAs: [
       "https://www.instagram.com/belluxentertainment",
       "https://www.facebook.com/belluxentertainment",

@@ -182,6 +182,31 @@ export type SiteContent = {
   footer: {
     copy: string;
     note: string;
+    legal: string;
+    privacy: string;
+    cookies: string;
+  };
+  cookiesBanner: {
+    title: string;
+    text: string;
+    policy: string;
+    accept: string;
+    reject: string;
+    settings: string;
+    settingsTitle: string;
+    settingsIntro: string;
+    save: string;
+    close: string;
+    alwaysOn: string;
+    necessaryTitle: string;
+    necessaryText: string;
+    preferencesTitle: string;
+    preferencesText: string;
+    analyticsTitle: string;
+    analyticsText: string;
+    marketingTitle: string;
+    marketingText: string;
+    manage: string;
   };
   ui: {
     readMore: string;
