@@ -36,7 +36,6 @@ export default function Footer() {
           </div>
         </div>
         <div className="copy">
-          <span>{t.footer.copy}</span>
           <div className="foot-legal">
             {legalLinks.map((link) => (
               <Link key={link.href} href={link.href}>
@@ -51,7 +50,7 @@ export default function Footer() {
               {t.cookiesBanner.manage}
             </button>
           </div>
-          <span>{t.footer.note}</span>
+          <span>{t.footer.copy}</span>
         </div>
       </div>
     </footer>

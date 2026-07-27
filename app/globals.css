@@ -1470,14 +1470,14 @@ section.hero {
 @media (max-width: 767px) {
   .svc-slash { display: none; }
   .svc-track {
-    min-height: clamp(500px, 72svh, 660px);
+    min-height: clamp(420px, 62svh, 560px);
     touch-action: pan-y;
   }
   .svc-slide {
     padding:
-      clamp(4.25rem, 14vw, 6rem)
+      clamp(3.75rem, 12vw, 5.25rem)
       clamp(1.15rem, 5vw, 1.75rem)
-      clamp(1.1rem, 3.5vw, 1.75rem);
+      0.65rem;
   }
   .svc-slide--left,
   .svc-slide--right {
@@ -1490,15 +1490,16 @@ section.hero {
     text-align: left;
   }
   .svc-stage-img {
-    --svc-pad-top: clamp(4.25rem, 14vw, 6rem);
-    --svc-pad-bottom: clamp(1.1rem, 3.5vw, 1.75rem);
-    width: min(82vw, 360px);
-    max-height: 56%;
+    --svc-pad-top: clamp(3.75rem, 12vw, 5.25rem);
+    --svc-pad-bottom: 0.65rem;
+    width: min(78vw, 340px);
+    max-height: 52%;
   }
   .svc-slide-title {
     font-size: clamp(1.4rem, 7.2vw, 2.15rem);
     line-height: 1.28;
-    padding-bottom: 0.65rem;
+    padding-bottom: 0.25rem;
+    margin-bottom: 0;
   }
   .svc-slide-line {
     white-space: nowrap;
@@ -1507,10 +1508,10 @@ section.hero {
   }
   .svc-slide-tag {
     width: min(12rem, 72%);
-    margin-bottom: clamp(1.5rem, 5vw, 2.5rem);
+    margin-bottom: clamp(1.15rem, 4vw, 1.85rem);
   }
   .svc-nav {
-    padding: 0.4rem 1rem max(1.15rem, env(safe-area-inset-bottom));
+    padding: 0.25rem 1rem max(0.95rem, env(safe-area-inset-bottom));
     gap: 0.75rem;
   }
   .svc-nav-btn {
@@ -1696,14 +1697,51 @@ section.hero {
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: rgba(10, 10, 10, 0.4);
-  white-space: nowrap;
   overflow: hidden;
+  width: 100%;
+  max-width: min(38rem, 100%); /* same band as .ig-sub */
   margin-bottom: clamp(1.5rem, 3vw, 2.25rem);
+  mask-image: linear-gradient(
+    90deg,
+    transparent,
+    #000 6%,
+    #000 94%,
+    transparent
+  );
 }
 
-.ig-follow span {
-  display: inline-block;
-  padding-right: 1rem;
+.ig-follow-track {
+  display: flex;
+  width: max-content;
+  animation: igFollowScroll 28s linear infinite;
+  will-change: transform;
+}
+
+.ig-follow-group {
+  display: flex;
+  flex-shrink: 0;
+}
+
+.ig-follow-item {
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;
+  padding-right: 0.85em;
+}
+
+.ig-follow-item::after {
+  content: "·";
+  margin-left: 0.85em;
+  opacity: 0.7;
+}
+
+@keyframes igFollowScroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ig-follow-track { animation: none; }
 }
 
 .ig-title {
@@ -1782,33 +1820,19 @@ section.hero {
 }
 
 .ig-card {
-  flex: 0 0 220px;
-  width: 220px;
-  display: flex;
-  flex-direction: column;
-  gap: 0.55rem;
+  flex: 0 0 280px;
+  width: 280px;
+  display: block;
   text-decoration: none;
   color: inherit;
-}
-
-.ig-card-meta {
-  display: flex;
-  justify-content: space-between;
-  gap: 0.75rem;
-  font-family: var(--sans);
-  font-size: 0.68rem;
-  font-weight: 600;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: rgba(10, 10, 10, 0.45);
 }
 
 .ig-card-media {
   width: 100%;
   aspect-ratio: 4 / 5;
   overflow: hidden;
-  border: 1px solid rgba(0, 0, 0, 0.08);
-  border-radius: 6px 6px 0 0;
+  border: none;
+  border-radius: 0;
   background: #111;
 }
 
@@ -1848,8 +1872,8 @@ section.hero {
   }
 
   .ig-card {
-    flex: 0 0 180px;
-    width: 180px;
+    flex: 0 0 220px;
+    width: 220px;
   }
 
   .ig-rail-group {
@@ -2442,13 +2466,16 @@ section.hero {
 }
 
 .contact-cta-frame {
-  position: relative;
+  position: absolute;
+  left: 50%;
+  top: 50%;
   width: min(132vw, 920px);
   aspect-ratio: 1;
   display: grid;
   place-items: center;
+  justify-items: center;
   /* Drop frame so bottom of circle crops; core stays on circle center */
-  transform: translateY(24%);
+  transform: translate(-50%, calc(-50% + 24%));
 }
 
 .contact-cta-orbit {
@@ -2912,7 +2939,8 @@ section.hero {
     /* Keep most of the upper arc in view without side-clipping letters */
     width: min(112vw, 480px);
     max-width: none;
-    transform: translateY(12%);
+    margin: 0;
+    transform: translate(-50%, calc(-50% + 12%));
   }
 
   .contact-cta-orbit {
@@ -2928,6 +2956,8 @@ section.hero {
     width: min(62%, 13.75rem);
     gap: 1.05rem;
     padding-bottom: 0.25rem;
+    margin-inline: auto;
+    justify-self: center;
   }
 
   .contact-cta-pitch {
@@ -2974,7 +3004,7 @@ section.hero {
 
   .contact-cta-frame {
     width: min(120vw, 420px);
-    transform: translateY(10%);
+    transform: translate(-50%, calc(-50% + 10%));
   }
 
   .contact-cta-core {
@@ -3640,32 +3670,9 @@ footer .wrap {
   .legal-page {
     padding-top: 16px;
   }
-  .copy {
-    flex-direction: column;
-    align-items: flex-start;
-  }
 }
 
 /* reveal */
-[data-r] {
-  opacity: 0;
-  transform: translateY(22px);
-  transition:
-    opacity 0.8s ease,
-    transform 0.8s ease;
-}
-[data-r].in {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-@media (prefers-reduced-motion: reduce) {
-  * {
-    animation: none !important;
-    transition: none !important;
-  }
-}
-
 [data-r] {
   opacity: 0;
   transform: translateY(24px);
@@ -3676,6 +3683,18 @@ footer .wrap {
 [data-r].in {
   opacity: 1;
   transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-r] {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
 }
 .btn:focus-visible,
 .lang button:focus-visible,
@@ -3865,23 +3884,32 @@ footer .wrap {
 
   footer {
     padding-bottom: max(2rem, env(safe-area-inset-bottom));
+    text-align: center;
   }
 
   .foot-row {
     flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
     gap: 1.25rem;
   }
 
   .foot-links {
     gap: 0.85rem 1.15rem;
     flex-wrap: wrap;
+    justify-content: center;
   }
 
   .copy {
     flex-direction: column;
-    gap: 0.4rem;
+    align-items: center;
+    justify-content: center;
+    gap: 0.85rem;
     letter-spacing: 0.04em;
+    text-align: center;
+  }
+
+  .foot-legal {
+    justify-content: center;
   }
 
   .maintenance {

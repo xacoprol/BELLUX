@@ -4,6 +4,15 @@ import { useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
 import Lenis from "lenis";
 
+function revealVisible(el: Element) {
+  const rect = el.getBoundingClientRect();
+  const vh = window.innerHeight || 0;
+  // Already on screen (or nearly) → show without waiting for IO callback
+  if (rect.top < vh * 0.92 && rect.bottom > 0) {
+    el.classList.add("in");
+  }
+}
+
 export default function PageEffects() {
   const pathname = usePathname();
   const lenisRef = useRef<Lenis | null>(null);
@@ -14,26 +23,33 @@ export default function PageEffects() {
       history.scrollRestoration = "manual";
     }
 
+    const reduceMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
+
     const io = new IntersectionObserver(
       (entries) => {
         entries.forEach((e) => {
           if (e.isIntersecting) e.target.classList.add("in");
         });
       },
-      { threshold: 0.12 }
+      { threshold: 0.08, rootMargin: "0px 0px -4% 0px" }
     );
     ioRef.current = io;
 
     const observeReveal = () => {
-      document.querySelectorAll("[data-r]:not(.in)").forEach((el) => {
+      document.querySelectorAll("[data-r]").forEach((el) => {
+        if (el.classList.contains("in")) return;
+        if (reduceMotion) {
+          el.classList.add("in");
+          return;
+        }
         io.observe(el);
+        revealVisible(el);
       });
     };
-    observeReveal();
 
-    const reduceMotion = window.matchMedia(
-      "(prefers-reduced-motion: reduce)"
-    ).matches;
+    observeReveal();
 
     let lenis: Lenis | null = null;
     let rafId = 0;
@@ -100,6 +116,7 @@ export default function PageEffects() {
   }, []);
 
   // New route → top of page (keep position only for in-page #hashes)
+  // and re-bind reveal observers after App Router remounts content
   useEffect(() => {
     const hash = window.location.hash;
     if (hash && hash.length > 1) {
@@ -124,23 +141,56 @@ export default function PageEffects() {
           }
         });
       }
-      return;
-    }
-
-    const lenis = lenisRef.current;
-    if (lenis) {
-      lenis.scrollTo(0, { immediate: true });
     } else {
-      window.scrollTo(0, 0);
+      const lenis = lenisRef.current;
+      if (lenis) {
+        lenis.scrollTo(0, { immediate: true });
+      } else {
+        window.scrollTo(0, 0);
+      }
     }
 
-    // Re-observe reveal elements on the new page
-    const io = ioRef.current;
-    if (io) {
-      document.querySelectorAll("[data-r]:not(.in)").forEach((el) => {
+    const reduceMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
+
+    const observeReveal = () => {
+      const io = ioRef.current;
+      if (!io) return;
+      document.querySelectorAll("[data-r]").forEach((el) => {
+        if (el.classList.contains("in")) return;
+        if (reduceMotion) {
+          el.classList.add("in");
+          return;
+        }
         io.observe(el);
+        revealVisible(el);
       });
-    }
+    };
+
+    observeReveal();
+
+    // Soft navigations mount page content after this effect — retry after paint
+    let raf2 = 0;
+    const raf1 = requestAnimationFrame(() => {
+      observeReveal();
+      raf2 = requestAnimationFrame(observeReveal);
+    });
+    const t1 = window.setTimeout(observeReveal, 80);
+    const t2 = window.setTimeout(observeReveal, 320);
+
+    const mo = new MutationObserver(() => observeReveal());
+    mo.observe(document.body, { childList: true, subtree: true });
+    const stopMo = window.setTimeout(() => mo.disconnect(), 1500);
+
+    return () => {
+      cancelAnimationFrame(raf1);
+      cancelAnimationFrame(raf2);
+      window.clearTimeout(t1);
+      window.clearTimeout(t2);
+      window.clearTimeout(stopMo);
+      mo.disconnect();
+    };
   }, [pathname]);
 
   return null;

@@ -17,14 +17,24 @@ export default function Instagram({
 }) {
   const { t } = useLanguage();
   const ig = t.instagram;
-  const followLoop = Array.from({ length: 8 }, () => ig.follow).join(" · ");
+  const followItems = Array.from({ length: 12 }, () => ig.follow);
 
   return (
     <section className="instagram" id="instagram" aria-labelledby="ig-title">
       <div className="wrap ig-head">
         <div className="ig-head-copy">
           <p className="ig-follow" aria-hidden="true">
-            <span>{followLoop}</span>
+            <span className="ig-follow-track">
+              {[0, 1].map((loop) => (
+                <span className="ig-follow-group" key={loop}>
+                  {followItems.map((label, i) => (
+                    <span className="ig-follow-item" key={`${loop}-${i}`}>
+                      {label}
+                    </span>
+                  ))}
+                </span>
+              ))}
+            </span>
           </p>
 
           <h2 id="ig-title" className="ig-title">
@@ -59,10 +69,6 @@ export default function Instagram({
                   className="ig-card"
                   role={loop === 0 ? "listitem" : undefined}
                 >
-                  <div className="ig-card-meta">
-                    <span>{post.year}</span>
-                    <span>{post.place}</span>
-                  </div>
                   <div className="ig-card-media">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
