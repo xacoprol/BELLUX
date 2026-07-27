@@ -68,6 +68,33 @@ export default function LegalDocument({ docId }: { docId: LegalDocId }) {
                 ))}
               </ul>
             ) : null}
+            {section.table ? (
+              <div className="legal-table-wrap">
+                <table className="legal-table">
+                  <thead>
+                    <tr>
+                      {section.table.headers.map((header) => (
+                        <th key={header} scope="col">
+                          {header}
+                        </th>
+                      ))}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {section.table.rows.map((row) => (
+                      <tr key={row[0]}>
+                        {row.map((cell, i) => (
+                          <td key={`${row[0]}-${i}`}>{cell}</td>
+                        ))}
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+                {section.table.note ? (
+                  <p className="legal-table-note">{section.table.note}</p>
+                ) : null}
+              </div>
+            ) : null}
           </section>
         ))}
 

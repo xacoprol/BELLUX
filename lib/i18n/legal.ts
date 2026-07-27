@@ -3,10 +3,17 @@ import type { Locale } from "@/lib/i18n/types";
 
 export type LegalDocId = "aviso-legal" | "privacidade" | "cookies";
 
+export type LegalTable = {
+  headers: string[];
+  rows: string[][];
+  note?: string;
+};
+
 export type LegalSection = {
   title: string;
   paragraphs: string[];
   list?: string[];
+  table?: LegalTable;
 };
 
 export type LegalDoc = {
@@ -26,6 +33,168 @@ const updated = {
   es: "Última actualización: julio de 2026",
   en: "Last updated: July 2026",
 } as const;
+
+const cookieTablePt: LegalTable = {
+  headers: [
+    "Nome",
+    "Fornecedor",
+    "Finalidade",
+    "Tipo",
+    "Duração",
+    "Categoria",
+  ],
+  rows: [
+    [
+      "bellux-cookie-consent",
+      company.legalName,
+      "Guarda as suas escolhas de consentimento de cookies (aceitar, rejeitar ou categorias).",
+      "Armazenamento local (localStorage)",
+      "Até apagar os dados do browser ou alterar o consentimento",
+      "Necessários",
+    ],
+    [
+      "bellux-locale",
+      company.legalName,
+      "Memoriza o idioma selecionado (PT, ES ou EN).",
+      "Armazenamento local (localStorage)",
+      "Até apagar os dados do browser",
+      "Preferências",
+    ],
+    [
+      "_ga",
+      "Google LLC (Google Analytics 4)",
+      "Distingue utilizadores de forma agregada para estatísticas de audiência.",
+      "Cookie de terceiros / HTTP",
+      "Até 2 anos",
+      "Analíticos",
+    ],
+    [
+      "_ga_*",
+      "Google LLC (Google Analytics 4)",
+      "Mantém o estado da sessão e calcula métricas de visita no GA4.",
+      "Cookie de terceiros / HTTP",
+      "Até 2 anos",
+      "Analíticos",
+    ],
+    [
+      "_gid",
+      "Google LLC (Google Analytics 4)",
+      "Distingue utilizadores durante 24 horas para estatísticas.",
+      "Cookie de terceiros / HTTP",
+      "24 horas",
+      "Analíticos",
+    ],
+  ],
+  note: "Os cookies de Google Analytics (_ga, _ga_*, _gid) só são ativados se aceitar a categoria «Analíticos». O nome exacto _ga_* depende do ID de medição GA4 (por exemplo _ga_XXXX). Não utilizamos atualmente cookies de marketing próprios; se no futuro forem ativados, esta tabela será atualizada.",
+};
+
+const cookieTableEs: LegalTable = {
+  headers: [
+    "Nombre",
+    "Proveedor",
+    "Finalidad",
+    "Tipo",
+    "Duración",
+    "Categoría",
+  ],
+  rows: [
+    [
+      "bellux-cookie-consent",
+      company.legalName,
+      "Guarda sus elecciones de consentimiento de cookies (aceptar, rechazar o categorías).",
+      "Almacenamiento local (localStorage)",
+      "Hasta borrar los datos del navegador o cambiar el consentimiento",
+      "Necesarias",
+    ],
+    [
+      "bellux-locale",
+      company.legalName,
+      "Recuerda el idioma seleccionado (PT, ES o EN).",
+      "Almacenamiento local (localStorage)",
+      "Hasta borrar los datos del navegador",
+      "Preferencias",
+    ],
+    [
+      "_ga",
+      "Google LLC (Google Analytics 4)",
+      "Distingue usuarios de forma agregada para estadísticas de audiencia.",
+      "Cookie de terceros / HTTP",
+      "Hasta 2 años",
+      "Analíticas",
+    ],
+    [
+      "_ga_*",
+      "Google LLC (Google Analytics 4)",
+      "Mantiene el estado de la sesión y calcula métricas de visita en GA4.",
+      "Cookie de terceros / HTTP",
+      "Hasta 2 años",
+      "Analíticas",
+    ],
+    [
+      "_gid",
+      "Google LLC (Google Analytics 4)",
+      "Distingue usuarios durante 24 horas para estadísticas.",
+      "Cookie de terceros / HTTP",
+      "24 horas",
+      "Analíticas",
+    ],
+  ],
+  note: "Las cookies de Google Analytics (_ga, _ga_*, _gid) solo se activan si acepta la categoría «Analíticas». El nombre exacto _ga_* depende del ID de medición GA4 (por ejemplo _ga_XXXX). No usamos actualmente cookies de marketing propias; si en el futuro se activan, esta tabla se actualizará.",
+};
+
+const cookieTableEn: LegalTable = {
+  headers: [
+    "Name",
+    "Provider",
+    "Purpose",
+    "Type",
+    "Duration",
+    "Category",
+  ],
+  rows: [
+    [
+      "bellux-cookie-consent",
+      company.legalName,
+      "Stores your cookie consent choices (accept, reject or categories).",
+      "Local storage (localStorage)",
+      "Until browser data is cleared or consent is changed",
+      "Necessary",
+    ],
+    [
+      "bellux-locale",
+      company.legalName,
+      "Remembers the selected language (PT, ES or EN).",
+      "Local storage (localStorage)",
+      "Until browser data is cleared",
+      "Preferences",
+    ],
+    [
+      "_ga",
+      "Google LLC (Google Analytics 4)",
+      "Distinguishes users in aggregate for audience statistics.",
+      "Third-party / HTTP cookie",
+      "Up to 2 years",
+      "Analytics",
+    ],
+    [
+      "_ga_*",
+      "Google LLC (Google Analytics 4)",
+      "Keeps session state and calculates visit metrics in GA4.",
+      "Third-party / HTTP cookie",
+      "Up to 2 years",
+      "Analytics",
+    ],
+    [
+      "_gid",
+      "Google LLC (Google Analytics 4)",
+      "Distinguishes users for 24 hours for statistics.",
+      "Third-party / HTTP cookie",
+      "24 hours",
+      "Analytics",
+    ],
+  ],
+  note: "Google Analytics cookies (_ga, _ga_*, _gid) are only enabled if you accept the “Analytics” category. The exact _ga_* name depends on your GA4 measurement ID (e.g. _ga_XXXX). We do not currently use our own marketing cookies; if they are enabled later, this table will be updated.",
+};
 
 const avisoPt: LegalDoc = {
   id: "aviso-legal",
@@ -167,46 +336,59 @@ const cookiesPt: LegalDoc = {
     {
       title: "1. O que são cookies",
       paragraphs: [
-        `Cookies são pequenos ficheiros armazenados no seu dispositivo quando visita um website. Servem para o site funcionar corretamente, recordar preferências ou obter informação estatística sobre a navegação.`,
+        `Cookies são pequenos ficheiros armazenados no seu dispositivo quando visita um website. Servem para o site funcionar corretamente, recordar preferências ou obter informação estatística sobre a navegação. Nesta política incluímos também tecnologias semelhantes, como o armazenamento local (localStorage).`,
       ],
     },
     {
       title: "2. Quem utiliza cookies",
       paragraphs: [
-        `Este website é operado por ${identity}. Alguns cookies podem ser definidos por serviços de terceiros integrados no site (por exemplo, redes sociais, analítica ou conteúdos multimédia), quando ativos.`,
+        `Este website é operado por ${identity}. Além dos cookies/armazenamento próprios, utilizamos Google Analytics 4 (Google LLC) para estatísticas, apenas com o seu consentimento na categoria «Analíticos».`,
       ],
     },
     {
-      title: "3. Tipos de cookies que podemos utilizar",
-      paragraphs: [],
+      title: "3. Tipos de cookies",
+      paragraphs: [`Classificamos os cookies nas seguintes categorias:`],
       list: [
-        "Cookies técnicos / necessários: indispensáveis ao funcionamento do site (por exemplo, segurança, preferência de idioma ou sessão).",
-        "Cookies de preferência: memoram escolhas do utilizador para melhorar a experiência.",
-        "Cookies analíticos: permitem compreender como o site é utilizado, de forma agregada, para melhorar conteúdos e desempenho.",
-        "Cookies de marketing / redes sociais: podem ser usados se integrar botões ou conteúdos de plataformas externas.",
+        "Necessários: indispensáveis ao funcionamento do site e à gestão do consentimento.",
+        "Preferências: memorizam opções como o idioma.",
+        "Analíticos: Google Analytics 4, para compreender o uso do site de forma agregada.",
+        "Marketing: não estão ativos de momento; se forem introduzidos, serão listados nesta política e exigirão consentimento.",
       ],
     },
     {
-      title: "4. Base legal",
+      title: "4. Tabela de cookies",
       paragraphs: [
-        `Os cookies estritamente necessários podem ser utilizados com base no interesse legítimo de garantir o funcionamento do website. Os restantes cookies apenas serão utilizados com o seu consentimento, quando aplicável.`,
+        `Segue o inventário dos cookies e tecnologias semelhantes utilizadas ou previstas neste website:`,
+      ],
+      table: cookieTablePt,
+    },
+    {
+      title: "5. Base legal",
+      paragraphs: [
+        `Os cookies/armazenamento estritamente necessários podem ser utilizados com base no interesse legítimo de garantir o funcionamento do website e o registo do consentimento. Os cookies de preferências, analíticos (incluindo Google Analytics) e marketing só são utilizados com o seu consentimento prévio, que pode retirar a qualquer momento.`,
       ],
     },
     {
-      title: "5. Gestão e desativação",
+      title: "6. Transferências internacionais",
+      paragraphs: [
+        `Google Analytics pode implicar o tratamento de dados por Google LLC, com servidores potencialmente fora do Espaço Económico Europeu. Nesse caso, aplicam-se as salvaguardas previstas pela Google (incluindo cláusulas contratuais-tipo, quando aplicável). Pode consultar mais informação em policies.google.com/privacy.`,
+      ],
+    },
+    {
+      title: "7. Gestão e desativação",
       paragraphs: [
         `Pode gerir o seu consentimento a qualquer momento através do banner de cookies ou da opção «Gerir cookies» no rodapé do website (Aceitar, Rejeitar ou Ajustes por categoria).`,
         `Também pode configurar o seu navegador para bloquear ou eliminar cookies. A forma de o fazer depende do navegador utilizado (Chrome, Firefox, Safari, Edge, etc.). Tenha em conta que desativar cookies necessários pode afetar o funcionamento de algumas funcionalidades.`,
       ],
     },
     {
-      title: "6. Atualizações",
+      title: "8. Atualizações",
       paragraphs: [
-        `Esta política pode ser atualizada para refletir alterações legais ou técnicas. A data de atualização consta no topo desta página.`,
+        `Esta política pode ser atualizada para refletir alterações legais ou técnicas (por exemplo, novos cookies de Google Analytics ou marketing). A data de atualização consta no topo desta página.`,
       ],
     },
     {
-      title: "7. Contacto",
+      title: "9. Contacto",
       paragraphs: [
         `Para questões sobre cookies ou privacidade: ${company.legalName}, ${address}, telefone ${company.phone}.`,
       ],
@@ -352,46 +534,59 @@ const cookiesEs: LegalDoc = {
     {
       title: "1. Qué son las cookies",
       paragraphs: [
-        `Las cookies son pequeños archivos que se almacenan en su dispositivo al visitar un sitio web. Sirven para que el sitio funcione correctamente, recordar preferencias u obtener información estadística sobre la navegación.`,
+        `Las cookies son pequeños archivos que se almacenan en su dispositivo al visitar un sitio web. Sirven para que el sitio funcione correctamente, recordar preferencias u obtener información estadística sobre la navegación. En esta política también incluimos tecnologías similares, como el almacenamiento local (localStorage).`,
       ],
     },
     {
       title: "2. Quién utiliza cookies",
       paragraphs: [
-        `Este sitio web es operado por ${identity}. Algunas cookies pueden ser establecidas por servicios de terceros integrados en el sitio (por ejemplo, redes sociales, analítica o contenidos multimedia), cuando estén activos.`,
+        `Este sitio web es operado por ${identity}. Además de las cookies/almacenamiento propios, utilizamos Google Analytics 4 (Google LLC) para estadísticas, solo con su consentimiento en la categoría «Analíticas».`,
       ],
     },
     {
-      title: "3. Tipos de cookies que podemos utilizar",
-      paragraphs: [],
+      title: "3. Tipos de cookies",
+      paragraphs: [`Clasificamos las cookies en las siguientes categorías:`],
       list: [
-        "Cookies técnicas / necesarias: imprescindibles para el funcionamiento del sitio (por ejemplo, seguridad, preferencia de idioma o sesión).",
-        "Cookies de preferencia: recuerdan elecciones del usuario para mejorar la experiencia.",
-        "Cookies analíticas: permiten comprender cómo se utiliza el sitio, de forma agregada, para mejorar contenidos y rendimiento.",
-        "Cookies de marketing / redes sociales: pueden usarse si se integran botones o contenidos de plataformas externas.",
+        "Necesarias: imprescindibles para el funcionamiento del sitio y la gestión del consentimiento.",
+        "Preferencias: recuerdan opciones como el idioma.",
+        "Analíticas: Google Analytics 4, para comprender el uso del sitio de forma agregada.",
+        "Marketing: no están activas de momento; si se introducen, se listarán en esta política y exigirán consentimiento.",
       ],
     },
     {
-      title: "4. Base jurídica",
+      title: "4. Tabla de cookies",
       paragraphs: [
-        `Las cookies estrictamente necesarias pueden utilizarse sobre la base del interés legítimo de garantizar el funcionamiento del sitio. El resto de cookies solo se utilizarán con su consentimiento, cuando proceda.`,
+        `A continuación, el inventario de cookies y tecnologías similares utilizadas o previstas en este sitio:`,
+      ],
+      table: cookieTableEs,
+    },
+    {
+      title: "5. Base jurídica",
+      paragraphs: [
+        `Las cookies/almacenamiento estrictamente necesarios pueden utilizarse sobre la base del interés legítimo de garantizar el funcionamiento del sitio y el registro del consentimiento. Las cookies de preferencias, analíticas (incluido Google Analytics) y marketing solo se utilizan con su consentimiento previo, que puede retirar en cualquier momento.`,
       ],
     },
     {
-      title: "5. Gestión y desactivación",
+      title: "6. Transferencias internacionales",
+      paragraphs: [
+        `Google Analytics puede implicar el tratamiento de datos por Google LLC, con servidores potencialmente fuera del Espacio Económico Europeo. En ese caso se aplican las salvaguardas previstas por Google (incluidas cláusulas contractuales tipo, cuando proceda). Más información en policies.google.com/privacy.`,
+      ],
+    },
+    {
+      title: "7. Gestión y desactivación",
       paragraphs: [
         `Puede gestionar su consentimiento en cualquier momento mediante el banner de cookies o la opción «Gestionar cookies» en el pie del sitio (Aceptar, Rechazar o Ajustes por categoría).`,
         `También puede configurar su navegador para bloquear o eliminar cookies. El procedimiento depende del navegador (Chrome, Firefox, Safari, Edge, etc.). Desactivar cookies necesarias puede afectar al funcionamiento de algunas funciones.`,
       ],
     },
     {
-      title: "6. Actualizaciones",
+      title: "8. Actualizaciones",
       paragraphs: [
-        `Esta política puede actualizarse para reflejar cambios legales o técnicos. La fecha de actualización figura en la parte superior de esta página.`,
+        `Esta política puede actualizarse para reflejar cambios legales o técnicos (por ejemplo, nuevas cookies de Google Analytics o marketing). La fecha de actualización figura en la parte superior de esta página.`,
       ],
     },
     {
-      title: "7. Contacto",
+      title: "9. Contacto",
       paragraphs: [
         `Para cuestiones sobre cookies o privacidad: ${company.legalName}, ${address}, teléfono ${company.phone}.`,
       ],
@@ -537,46 +732,59 @@ const cookiesEn: LegalDoc = {
     {
       title: "1. What cookies are",
       paragraphs: [
-        `Cookies are small files stored on your device when you visit a website. They help the site work properly, remember preferences, or gather statistical information about browsing.`,
+        `Cookies are small files stored on your device when you visit a website. They help the site work properly, remember preferences, or gather statistical information about browsing. This policy also covers similar technologies such as local storage (localStorage).`,
       ],
     },
     {
       title: "2. Who uses cookies",
       paragraphs: [
-        `This website is operated by ${identity}. Some cookies may be set by third-party services embedded on the site (for example social networks, analytics or media), when those are active.`,
+        `This website is operated by ${identity}. In addition to our own cookies/storage, we use Google Analytics 4 (Google LLC) for statistics, only with your consent in the “Analytics” category.`,
       ],
     },
     {
-      title: "3. Types of cookies we may use",
-      paragraphs: [],
+      title: "3. Types of cookies",
+      paragraphs: [`We classify cookies into the following categories:`],
       list: [
-        "Technical / necessary cookies: essential for the site to function (for example security, language preference or session).",
-        "Preference cookies: remember user choices to improve the experience.",
-        "Analytics cookies: help us understand how the site is used, in aggregate, to improve content and performance.",
-        "Marketing / social cookies: may be used if buttons or content from external platforms are embedded.",
+        "Necessary: essential for the site to function and for consent management.",
+        "Preferences: remember choices such as language.",
+        "Analytics: Google Analytics 4, to understand site use in aggregate.",
+        "Marketing: not active at present; if introduced, they will be listed in this policy and will require consent.",
       ],
     },
     {
-      title: "4. Legal basis",
+      title: "4. Cookie table",
       paragraphs: [
-        `Strictly necessary cookies may be used on the basis of legitimate interest in keeping the website working. Other cookies will only be used with your consent, where required.`,
+        `Below is the inventory of cookies and similar technologies used or planned on this website:`,
+      ],
+      table: cookieTableEn,
+    },
+    {
+      title: "5. Legal basis",
+      paragraphs: [
+        `Strictly necessary cookies/storage may be used on the basis of legitimate interest in keeping the website working and recording consent. Preference, analytics (including Google Analytics) and marketing cookies are only used with your prior consent, which you may withdraw at any time.`,
       ],
     },
     {
-      title: "5. Managing and disabling cookies",
+      title: "6. International transfers",
+      paragraphs: [
+        `Google Analytics may involve processing by Google LLC, with servers potentially outside the European Economic Area. In that case Google’s safeguards apply (including standard contractual clauses where applicable). See policies.google.com/privacy for more information.`,
+      ],
+    },
+    {
+      title: "7. Managing and disabling cookies",
       paragraphs: [
         `You can manage your consent at any time via the cookie banner or the “Manage cookies” option in the website footer (Accept, Reject or category Settings).`,
         `You can also configure your browser to block or delete cookies. Steps vary by browser (Chrome, Firefox, Safari, Edge, etc.). Disabling necessary cookies may affect some features.`,
       ],
     },
     {
-      title: "6. Updates",
+      title: "8. Updates",
       paragraphs: [
-        `This policy may be updated to reflect legal or technical changes. The update date appears at the top of this page.`,
+        `This policy may be updated to reflect legal or technical changes (for example new Google Analytics or marketing cookies). The update date appears at the top of this page.`,
       ],
     },
     {
-      title: "7. Contact",
+      title: "9. Contact",
       paragraphs: [
         `For questions about cookies or privacy: ${company.legalName}, ${address}, phone ${company.phone}.`,
       ],
