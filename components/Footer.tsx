@@ -3,14 +3,15 @@
 import Link from "next/link";
 import Logo from "./Logo";
 import { useLanguage } from "@/context/LanguageContext";
+import { localePath } from "@/lib/i18n/routing";
 
 export default function Footer() {
-  const { t } = useLanguage();
+  const { locale, t } = useLanguage();
 
   const footLinks = [
-    { href: "/#sobre", label: t.nav.about },
-    { href: "/#servicios", label: t.nav.services },
-    { href: "/proyectos", label: t.nav.projects },
+    { href: localePath(locale, "/#sobre"), label: t.nav.about },
+    { href: localePath(locale, "/#servicios"), label: t.nav.services },
+    { href: localePath(locale, "/proyectos"), label: t.nav.projects },
     { href: "#contacto", label: t.nav.contact },
   ];
 
@@ -18,7 +19,7 @@ export default function Footer() {
     <footer>
       <div className="wrap">
         <div className="foot-row">
-          <Logo />
+          <Logo href={localePath(locale, "/")} />
           <div className="foot-links">
             {footLinks.map((link) => (
               <Link key={link.href} href={link.href}>

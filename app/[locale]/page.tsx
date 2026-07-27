@@ -6,15 +6,24 @@ import Testimonials from "@/components/Testimonials";
 import InstagramSection from "@/components/InstagramSection";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
+import { defaultLocale, isLocale } from "@/lib/i18n/routing";
+import type { Locale } from "@/lib/i18n/types";
 
-export default function Home() {
+export default async function Home({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale: raw } = await params;
+  const locale: Locale = isLocale(raw) ? raw : defaultLocale;
+
   return (
     <>
       <main>
         <HeroSection />
         <Manifesto />
-        <ServicesSection />
-        <ProjectsSection />
+        <ServicesSection locale={locale} />
+        <ProjectsSection locale={locale} />
         <Testimonials />
         <InstagramSection />
         <Contact />

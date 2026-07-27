@@ -3,6 +3,7 @@
 import { useEffect, useRef } from "react";
 import Link from "next/link";
 import { useLanguage } from "@/context/LanguageContext";
+import { localePath } from "@/lib/i18n/routing";
 import type { WpProject } from "@/lib/wp";
 import ProjectCardMedia from "./ProjectCardMedia";
 
@@ -21,7 +22,7 @@ export default function Projects({
 }: {
   wpProjects?: WpProject[];
 }) {
-  const { t } = useLanguage();
+  const { locale, t } = useLanguage();
   const listRef = useRef<HTMLDivElement>(null);
 
   const items: ProjectItem[] =
@@ -110,7 +111,7 @@ export default function Projects({
           <p className="projects-sub">{t.projects.sub}</p>
         </div>
 
-        <Link href="/proyectos" className="projects-cta">
+        <Link href={localePath(locale, "/proyectos")} className="projects-cta">
           {t.projects.cta}
         </Link>
       </div>

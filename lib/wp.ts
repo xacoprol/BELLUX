@@ -4,6 +4,9 @@
  *
  * Note: pretty permalinks for /wp-json may 404 on this host — use ?rest_route=.
  */
+import type { Locale } from "@/lib/i18n/types";
+import { translateTexts } from "@/lib/translate";
+
 export const WP_URL =
   process.env.NEXT_PUBLIC_WP_URL?.replace(/\/$/, "") ??
   "https://admin.belluxentertainment.com";
@@ -271,8 +274,11 @@ async function mapProyecto(
   };
 }
 
-/** Latest published proyectos from WP CPT `proyecto`. */
-export async function getWpProjects(limit = 12): Promise<WpProject[]> {
+/** Latest published proyectos from WP CPT `proyecto` (PT source, translated when needed). */
+export async function getWpProjects(
+  limit = 12,
+  locale: Locale = "pt"
+): Promise<WpProject[]> {
   try {
     const url = wpRest("/wp/v2/proyecto", {
       per_page: String(limit),
@@ -293,7 +299,24 @@ export async function getWpProjects(limit = 12): Promise<WpProject[]> {
     if (!Array.isArray(data) || data.length === 0) return [];
 
     const mapped = await Promise.all(data.map((post, i) => mapProyecto(post, i)));
-    return mapped.filter((p): p is WpProject => Boolean(p));
+    const projects = mapped.filter((p): p is WpProject => Boolean(p));
+    if (locale === "pt" || projects.length === 0) return projects;
+
+    const titles = projects.map((p) => p.title);
+    const descriptions = projects.map((p) => p.description);
+    const tags = projects.map((p) => p.tag);
+    const [tTitles, tDescriptions, tTags] = await Promise.all([
+      translateTexts(titles, locale),
+      translateTexts(descriptions, locale),
+      translateTexts(tags, locale),
+    ]);
+
+    return projects.map((p, i) => ({
+      ...p,
+      title: tTitles[i] || p.title,
+      description: tDescriptions[i] || p.description,
+      tag: tTags[i] || p.tag,
+    }));
   } catch {
     return [];
   }
@@ -347,8 +370,11 @@ function mapServicio(post: WpServicio): WpService | null {
   };
 }
 
-/** Published servicios from WP CPT `servicio` (title, excerpt as tag, featured image). */
-export async function getWpServices(limit = 12): Promise<WpService[]> {
+/** Published servicios from WP CPT `servicio` (PT source, translated when needed). */
+export async function getWpServices(
+  limit = 12,
+  locale: Locale = "pt"
+): Promise<WpService[]> {
   try {
     const url = wpRest("/wp/v2/servicio", {
       per_page: String(limit),
@@ -368,7 +394,31 @@ export async function getWpServices(limit = 12): Promise<WpService[]> {
     const data = (await res.json()) as WpServicio[];
     if (!Array.isArray(data) || data.length === 0) return [];
 
-    return data.map(mapServicio).filter((s): s is WpService => Boolean(s));
+    const services = data
+      .map(mapServicio)
+      .filter((s): s is WpService => Boolean(s));
+    if (locale === "pt" || services.length === 0) return services;
+
+    const titles = services.map((s) =>
+      s.lines
+        .flat()
+        .map((line) => line.text)
+        .join(" ")
+    );
+    const tags = services.map((s) => s.tag);
+    const [tTitles, tTags] = await Promise.all([
+      translateTexts(titles, locale),
+      translateTexts(tags, locale),
+    ]);
+
+    return services.map((s, i) => {
+      const translatedTitle = tTitles[i] || titles[i];
+      return {
+        ...s,
+        tag: (tTags[i] || s.tag).toUpperCase(),
+        lines: titleToServiceLines(translatedTitle),
+      };
+    });
   } catch {
     return [];
   }

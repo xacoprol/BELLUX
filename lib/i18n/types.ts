@@ -37,6 +37,8 @@ export type SiteContent = {
   meta: {
     title: string;
     description: string;
+    projectsTitle: string;
+    projectsDescription: string;
   };
   nav: {
     about: string;

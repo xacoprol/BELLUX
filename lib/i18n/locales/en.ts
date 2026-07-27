@@ -5,6 +5,9 @@ export const en: SiteContent = {
     title: "Bellux Entertainment",
     description:
       "Over 15 years of experience in entertainment, animation, and live show production across the Algarve, Portugal and Spain.",
+    projectsTitle: "Projects",
+    projectsDescription:
+      "Shows, entertainment and Bellux productions — hotels, Christmas, stage and events across Portugal and Spain.",
   },
   nav: {
     about: "About us",

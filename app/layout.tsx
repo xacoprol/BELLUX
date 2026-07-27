@@ -1,8 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Boldonse, Inter } from "next/font/google";
-import { LanguageProvider } from "@/context/LanguageContext";
 import "./globals.css";
-import PageEffects from "@/components/PageEffects";
+import { SITE_NAME, SITE_URL } from "@/lib/seo";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -19,7 +18,11 @@ const boldonse = Boldonse({
 });
 
 export const metadata: Metadata = {
-  title: "Bellux Entertainment",
+  metadataBase: new URL(SITE_URL),
+  title: {
+    default: SITE_NAME,
+    template: `%s | ${SITE_NAME}`,
+  },
   description:
     "Mais de 15 anos de experiência em animação, entretenimento e produção de espetáculos no Algarve, Portugal e Espanha.",
 };
@@ -42,12 +45,7 @@ export default function RootLayout({
       className={`${inter.variable} ${boldonse.variable}`}
       suppressHydrationWarning
     >
-      <body>
-        <LanguageProvider>
-          <PageEffects />
-          {children}
-        </LanguageProvider>
-      </body>
+      <body>{children}</body>
     </html>
   );
 }

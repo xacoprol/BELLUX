@@ -5,6 +5,9 @@ export const pt: SiteContent = {
     title: "Bellux Entertainment",
     description:
       "Mais de 15 anos de experiência em animação, entretenimento e produção de espetáculos no Algarve, Portugal e Espanha.",
+    projectsTitle: "Projetos",
+    projectsDescription:
+      "Espetáculos, animações e produções Bellux — hotéis, Natal, palco e eventos em Portugal e Espanha.",
   },
   nav: {
     about: "Sobre nós",

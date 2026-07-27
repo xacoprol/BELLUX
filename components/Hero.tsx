@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { useLanguage } from "@/context/LanguageContext";
 import { localeLabels, locales } from "@/lib/i18n/content";
+import { localePath } from "@/lib/i18n/routing";
 import type { Locale } from "@/lib/i18n/types";
 import { wpMedia, type WpClient } from "@/lib/wp";
 import Logo from "./Logo";
@@ -12,11 +13,10 @@ export default function Hero({ wpClients = [] }: { wpClients?: WpClient[] }) {
   const { locale, setLocale, t } = useLanguage();
   const [menuOpen, setMenuOpen] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
-
   const navLinks = [
-    { href: "#sobre", label: t.nav.about },
-    { href: "#servicios", label: t.nav.services },
-    { href: "#proyectos", label: t.nav.projects },
+    { href: localePath(locale, "/#sobre"), label: t.nav.about },
+    { href: localePath(locale, "/#servicios"), label: t.nav.services },
+    { href: localePath(locale, "/#proyectos"), label: t.nav.projects },
     { href: "#contacto", label: t.nav.contact },
   ];
 
@@ -71,7 +71,7 @@ export default function Hero({ wpClients = [] }: { wpClients?: WpClient[] }) {
       </div>
 
       <header className="hero-nav" id="hdr">
-        <Logo className="logo--nav" priority />
+        <Logo href={localePath(locale, "/")} className="logo--nav" priority />
 
         <nav className="hero-nav-pill" aria-label="Primary">
           {navLinks.map((link) => (

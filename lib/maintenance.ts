@@ -1,9 +1,9 @@
 const TEXT = new TextEncoder();
 
-/** Toggle via env; default on so the site stays gated until disabled. */
+/** Opt-in gate via `MAINTENANCE_MODE=true`. Off by default — site is public. */
 export function isMaintenanceEnabled(): boolean {
   const flag = process.env.MAINTENANCE_MODE;
-  if (flag === undefined || flag === "") return true;
+  if (flag === undefined || flag === "") return false;
   return flag === "1" || flag.toLowerCase() === "true" || flag === "yes";
 }
 
