@@ -59,6 +59,13 @@ export const placeholderPosts: InstagramPost[] = [
     year: "2024",
     place: "Espetáculo",
   },
+  {
+    id: "8",
+    image: "/assets/images/instagram/8.png",
+    permalink: PROFILE,
+    year: "2024",
+    place: "Bond",
+  },
 ];
 
 type GraphMedia = {
