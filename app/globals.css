@@ -1685,7 +1685,9 @@ section.hero {
   background: #ffffff;
   color: #0a0a0a;
   padding: clamp(6rem, 14vw, 9.5rem) 0 0;
-  overflow: hidden;
+  /* Keep rail clipped horizontally; don't clip display glyphs vertically */
+  overflow-x: hidden;
+  overflow-y: visible;
   display: flex;
   flex-direction: column;
 }
@@ -1765,12 +1767,15 @@ section.hero {
   font-family: var(--display);
   font-weight: 400;
   font-size: clamp(1.85rem, 4.2vw, 3.35rem);
-  line-height: 1.22;
+  line-height: 1.38;
   letter-spacing: 0.01em;
   color: #0a0a0a;
   text-wrap: balance;
   margin-bottom: 1.15rem;
   max-width: min(58rem, 100%);
+  overflow: visible;
+  overflow-wrap: break-word;
+  padding-block: 0.06em 0.12em;
 }
 
 .ig-accent {
@@ -1881,11 +1886,29 @@ section.hero {
   .ig-head {
     flex-direction: column;
     align-items: flex-start;
+    gap: 1.25rem;
+  }
+
+  .ig-head-copy {
+    width: 100%;
+  }
+
+  .ig-title {
+    font-size: clamp(1.4rem, 6.6vw, 1.95rem);
+    line-height: 1.42;
+    padding-block: 0.1em 0.18em;
+    margin-bottom: 1rem;
+  }
+
+  .ig-sub {
+    overflow-wrap: break-word;
+    max-width: 100%;
   }
 
   .ig-profile {
     align-self: flex-start;
-    margin-top: 0.35rem;
+    margin-top: 0.15rem;
+    white-space: normal;
   }
 
   .ig-card {
@@ -3948,6 +3971,13 @@ footer .wrap {
   .ig-title {
     font-size: clamp(1.55rem, 7vw, 2.15rem);
     line-height: 1.28;
+  }
+
+  .ig-title {
+    font-size: clamp(1.4rem, 6.6vw, 1.95rem);
+    line-height: 1.42;
+    overflow-wrap: break-word;
+    word-break: normal;
   }
 
   .projects-copy,
