@@ -2270,6 +2270,9 @@ section.hero {
   grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
   gap: clamp(1rem, 3vw, 2.5rem);
   align-items: start;
+  transform-origin: center bottom;
+  transform-style: preserve-3d;
+  will-change: transform, opacity;
 }
 
 .proj-card-title {
@@ -2483,7 +2486,8 @@ section.hero {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .proj-card-frame {
+  .proj-card-frame,
+  .proj-card-meta {
     transform: none !important;
     opacity: 1 !important;
   }

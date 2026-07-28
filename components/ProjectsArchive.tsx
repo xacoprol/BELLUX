@@ -73,6 +73,13 @@ export default function ProjectsArchive({
       frames.forEach((frame) => {
         frame.style.transform = "none";
         frame.style.opacity = "1";
+        const meta = frame
+          .closest(".proj-card")
+          ?.querySelector<HTMLElement>("[data-proj-meta]");
+        if (meta) {
+          meta.style.transform = "none";
+          meta.style.opacity = "1";
+        }
       });
       return;
     }
@@ -97,9 +104,18 @@ export default function ProjectsArchive({
         const scale = (narrow ? 0.66 : 0.78) + eased * (narrow ? 0.34 : 0.22);
         const y = (1 - eased) * (narrow ? 180 : 96);
         const opacity = (narrow ? 0.1 : 0.35) + eased * (narrow ? 0.9 : 0.65);
+        const transform = `perspective(900px) rotateX(${tilt}deg) scale(${scale}) translateY(${y}px)`;
 
-        frame.style.transform = `perspective(900px) rotateX(${tilt}deg) scale(${scale}) translateY(${y}px)`;
+        frame.style.transform = transform;
         frame.style.opacity = String(opacity);
+
+        const meta = frame
+          .closest(".proj-card")
+          ?.querySelector<HTMLElement>("[data-proj-meta]");
+        if (meta) {
+          meta.style.transform = transform;
+          meta.style.opacity = String(opacity);
+        }
       });
 
       raf = requestAnimationFrame(update);
@@ -237,7 +253,7 @@ export default function ProjectsArchive({
               ) : null}
             </div>
 
-            <div className="proj-card-meta">
+            <div className="proj-card-meta" data-proj-meta>
               <h2 className="proj-card-title">{item.title}</h2>
               {item.description ? (
                 <p className="proj-card-desc">{item.description}</p>

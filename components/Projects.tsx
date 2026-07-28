@@ -60,6 +60,13 @@ export default function Projects({
       frames.forEach((frame) => {
         frame.style.transform = "none";
         frame.style.opacity = "1";
+        const meta = frame
+          .closest(".proj-card")
+          ?.querySelector<HTMLElement>("[data-proj-meta]");
+        if (meta) {
+          meta.style.transform = "none";
+          meta.style.opacity = "1";
+        }
       });
       return;
     }
@@ -82,9 +89,18 @@ export default function Projects({
         const scale = 0.62 + eased * 0.38;
         const y = (1 - eased) * 220;
         const opacity = 0.08 + eased * 0.92;
+        const transform = `perspective(900px) rotateX(${tilt}deg) scale(${scale}) translateY(${y}px)`;
 
-        frame.style.transform = `perspective(900px) rotateX(${tilt}deg) scale(${scale}) translateY(${y}px)`;
+        frame.style.transform = transform;
         frame.style.opacity = String(opacity);
+
+        const meta = frame
+          .closest(".proj-card")
+          ?.querySelector<HTMLElement>("[data-proj-meta]");
+        if (meta) {
+          meta.style.transform = transform;
+          meta.style.opacity = String(opacity);
+        }
       });
 
       raf = requestAnimationFrame(update);
@@ -155,7 +171,7 @@ export default function Projects({
               ) : null}
             </div>
 
-            <div className="proj-card-meta">
+            <div className="proj-card-meta" data-proj-meta>
               <h3 className="proj-card-title">{item.title}</h3>
               {item.description ? (
                 <p className="proj-card-desc">{item.description}</p>
