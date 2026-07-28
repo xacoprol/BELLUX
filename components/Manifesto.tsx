@@ -1,7 +1,18 @@
 "use client";
 
-import { useId, useState } from "react";
+import { Fragment, useId, useState, type ReactNode } from "react";
 import { useLanguage } from "@/context/LanguageContext";
+
+/** Renders inline **bold** markers from locale strings. */
+function richText(text: string): ReactNode {
+  const parts = text.split(/(\*\*[^*]+\*\*)/g);
+  return parts.map((part, i) => {
+    if (part.startsWith("**") && part.endsWith("**")) {
+      return <strong key={i}>{part.slice(2, -2)}</strong>;
+    }
+    return <Fragment key={i}>{part}</Fragment>;
+  });
+}
 
 export default function Manifesto() {
   const { t } = useLanguage();
@@ -49,7 +60,7 @@ export default function Manifesto() {
         >
           <div className="manifesto-story-inner">
             {m.story.map((paragraph) => (
-              <p key={paragraph.slice(0, 48)}>{paragraph}</p>
+              <p key={paragraph.slice(0, 48)}>{richText(paragraph)}</p>
             ))}
           </div>
         </div>

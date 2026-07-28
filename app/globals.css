@@ -803,6 +803,11 @@ body::before {
   transition: transform 0.55s var(--ease-out);
 }
 
+.manifesto-story-inner strong {
+  color: #fff;
+  font-weight: 600;
+}
+
 .manifesto-story.is-open .manifesto-story-inner p {
   transform: translateY(0);
 }
