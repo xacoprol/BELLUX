@@ -413,9 +413,12 @@ export const en: SiteContent = {
     pitch: "Tell us what you're working on. We'll show you what's possible.",
     cta: "Get in touch",
     close: "Close",
+    submitting: "Sending…",
     successTitle: "We've received your request.",
     successText:
       "The Bellux team will get back to you soon — in Portuguese, Spanish or English.",
+    errorText:
+      "Couldn't send. Please try again or reach us on WhatsApp.",
   },
   footer: {
     copy: "© 2026 Bellux Entertainment",

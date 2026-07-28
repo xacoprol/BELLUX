@@ -45,6 +45,7 @@ export type WpProject = {
   image: string;
   images: string[];
   video?: string;
+  year: number;
   accent: "cyan" | "magenta" | "yellow";
 };
 
@@ -107,6 +108,29 @@ function pickImage(media?: WpMedia): string {
 }
 
 type VideoRef = { url?: string; id?: number };
+
+function pickYear(post: WpProyecto): number {
+  const bags: Array<Record<string, unknown> | undefined> = [
+    post.acf,
+    post.meta,
+  ];
+  const keys = ["ano", "year", "anyo", "año"];
+
+  for (const bag of bags) {
+    if (!bag) continue;
+    for (const key of keys) {
+      const val = bag[key];
+      if (typeof val === "number" && Number.isFinite(val) && val > 0) {
+        return Math.trunc(val);
+      }
+      if (typeof val === "string") {
+        const match = val.match(/\d{4}/);
+        if (match) return Number(match[0]);
+      }
+    }
+  }
+  return 0;
+}
 
 function pickVideoRef(post: WpProyecto): VideoRef {
   const bags: Array<Record<string, unknown> | undefined> = [
@@ -270,8 +294,17 @@ async function mapProyecto(
     image: featured || images[0] || "",
     images,
     video: video || undefined,
+    year: pickYear(post),
     accent: ACCENTS[index % ACCENTS.length],
   };
+}
+
+function sortProjects(projects: WpProject[]): WpProject[] {
+  return [...projects].sort((a, b) => {
+    const yearDiff = (b.year || 0) - (a.year || 0);
+    if (yearDiff !== 0) return yearDiff;
+    return a.title.localeCompare(b.title, "pt", { sensitivity: "base" });
+  });
 }
 
 /** Latest published proyectos from WP CPT `proyecto` (PT source, translated when needed). */
@@ -280,8 +313,10 @@ export async function getWpProjects(
   locale: Locale = "pt"
 ): Promise<WpProject[]> {
   try {
+    // Fetch a wider window, then sort by ACF `ano` + title (newest first)
+    const fetchLimit = Math.min(Math.max(limit, 40), 100);
     const url = wpRest("/wp/v2/proyecto", {
-      per_page: String(limit),
+      per_page: String(fetchLimit),
       _embed: "1",
       orderby: "date",
       order: "desc",
@@ -299,7 +334,15 @@ export async function getWpProjects(
     if (!Array.isArray(data) || data.length === 0) return [];
 
     const mapped = await Promise.all(data.map((post, i) => mapProyecto(post, i)));
-    const projects = mapped.filter((p): p is WpProject => Boolean(p));
+    const projects = sortProjects(
+      mapped.filter((p): p is WpProject => Boolean(p))
+    )
+      .slice(0, limit)
+      .map((p, i) => ({
+        ...p,
+        accent: ACCENTS[i % ACCENTS.length],
+      }));
+
     if (locale === "pt" || projects.length === 0) return projects;
 
     const titles = projects.map((p) => p.title);

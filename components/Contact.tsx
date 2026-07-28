@@ -21,12 +21,16 @@ export default function Contact() {
   const [open, setOpen] = useState(false);
   const [eventType, setEventType] = useState("");
   const [sent, setSent] = useState(false);
+  const [sending, setSending] = useState(false);
+  const [error, setError] = useState(false);
   const panelRef = useRef<HTMLDivElement>(null);
   const firstFieldRef = useRef<HTMLInputElement>(null);
   const pathId = useId().replace(/:/g, "");
 
   const openModal = () => {
     setSent(false);
+    setSending(false);
+    setError(false);
     setOpen(true);
   };
   const closeModal = () => {
@@ -77,10 +81,38 @@ export default function Contact() {
     };
   }, [open]);
 
-  const onSubmit = (e: React.FormEvent) => {
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setSent(true);
-    panelRef.current?.scrollTo({ top: 0, behavior: "smooth" });
+    if (sending) return;
+
+    const form = e.currentTarget;
+    const data = new FormData(form);
+
+    setSending(true);
+    setError(false);
+
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: String(data.get("name") ?? ""),
+          email: String(data.get("email") ?? ""),
+          phone: String(data.get("phone") ?? ""),
+          eventType: String(data.get("event-type") ?? eventType),
+          details: String(data.get("details") ?? ""),
+        }),
+      });
+
+      if (!res.ok) throw new Error("send-failed");
+
+      setSent(true);
+      panelRef.current?.scrollTo({ top: 0, behavior: "smooth" });
+    } catch {
+      setError(true);
+    } finally {
+      setSending(false);
+    }
   };
 
   return (
@@ -247,8 +279,18 @@ export default function Contact() {
                     <textarea name="details" rows={3} required />
                   </label>
 
-                  <button type="submit" className="contact-modal-submit">
-                    {t.contact.submit}
+                  {error ? (
+                    <p className="contact-modal-error" role="alert">
+                      {t.contact.errorText}
+                    </p>
+                  ) : null}
+
+                  <button
+                    type="submit"
+                    className="contact-modal-submit"
+                    disabled={sending}
+                  >
+                    {sending ? t.contact.submitting : t.contact.submit}
                     <span className="contact-cta-dot" aria-hidden="true" />
                   </button>
                 </form>

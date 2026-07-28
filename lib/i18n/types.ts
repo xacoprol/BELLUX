@@ -30,6 +30,7 @@ export type Project = {
   title: string;
   description: string;
   image: string;
+  year?: number | string;
   accent?: "cyan" | "magenta" | "yellow";
 };
 
@@ -176,8 +177,10 @@ export type SiteContent = {
     pitch: string;
     cta: string;
     close: string;
+    submitting: string;
     successTitle: string;
     successText: string;
+    errorText: string;
   };
   footer: {
     copy: string;

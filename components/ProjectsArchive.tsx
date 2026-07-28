@@ -17,6 +17,7 @@ type ProjectItem = {
   image: string;
   images: string[];
   video?: string;
+  year?: number;
   accent?: "cyan" | "magenta" | "yellow";
 };
 
@@ -45,10 +46,12 @@ export default function ProjectsArchive({
           image: p.image,
           images: p.images?.length ? p.images : p.image ? [p.image] : [],
           video: p.video,
+          year: p.year || undefined,
           accent: p.accent,
         }))
       : t.projects.items.map((item) => ({
           ...item,
+          year: item.year ? Number(item.year) || undefined : undefined,
           images: item.image ? [item.image] : [],
         }));
 
@@ -212,13 +215,25 @@ export default function ProjectsArchive({
                 prevLabel={t.projects.prevImage}
                 nextLabel={t.projects.nextImage}
               />
-              {item.tag ? (
-                <span
-                  className={`proj-card-tag proj-card-tag--${item.accent ?? "cyan"}`}
-                >
-                  <i aria-hidden="true" />
-                  {item.tag}
-                </span>
+              {item.year || item.tag ? (
+                <div className="proj-card-tags">
+                  {item.year ? (
+                    <span
+                      className={`proj-card-tag proj-card-tag--${item.accent ?? "cyan"}`}
+                    >
+                      <i aria-hidden="true" />
+                      {item.year}
+                    </span>
+                  ) : null}
+                  {item.tag ? (
+                    <span
+                      className={`proj-card-tag proj-card-tag--${item.accent ?? "cyan"}`}
+                    >
+                      <i aria-hidden="true" />
+                      {item.tag}
+                    </span>
+                  ) : null}
+                </div>
               ) : null}
             </div>
 
