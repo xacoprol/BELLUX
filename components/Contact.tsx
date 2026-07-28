@@ -1,18 +1,19 @@
 "use client";
 
 import { useEffect, useId, useRef, useState } from "react";
+import { company } from "@/lib/company";
 import { useLanguage } from "@/context/LanguageContext";
 
 const whatsappContacts = [
   {
-    href: "https://wa.me/351919015781",
+    href: company.whatsappPt,
     region: "Portugal & International",
-    phone: "+351 919 015 781",
+    phone: company.phone,
   },
   {
-    href: "https://wa.me/34608254139",
+    href: company.whatsappEs,
     region: "España",
-    phone: "+34 608 25 41 39",
+    phone: company.phoneEs,
   },
 ];
 

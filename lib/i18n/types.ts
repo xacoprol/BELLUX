@@ -170,6 +170,7 @@ export type SiteContent = {
     whatsappEyebrow: string;
     whatsappIntro: string;
     whatsappCta: string;
+    whatsappFloat: string;
     eventTypes: string[];
     ringBefore: string;
     ringAccent: string;

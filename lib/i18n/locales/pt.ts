@@ -399,6 +399,7 @@ export const pt: SiteContent = {
     whatsappIntro:
       "Prefere falar já connosco? Escolha o contacto do seu mercado.",
     whatsappCta: "Abrir WhatsApp",
+    whatsappFloat: "Contactar por WhatsApp",
     eventTypes: [
       "Animação em hotel",
       "Espetáculo aéreo",

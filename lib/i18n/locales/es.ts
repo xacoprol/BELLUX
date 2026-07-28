@@ -398,6 +398,7 @@ export const es: SiteContent = {
     whatsappEyebrow: "Respuesta rápida",
     whatsappIntro: "¿Prefieres hablar ya? Elige el contacto de tu mercado.",
     whatsappCta: "Abrir WhatsApp",
+    whatsappFloat: "Contactar por WhatsApp",
     eventTypes: [
       "Animación en hotel",
       "Espectáculo aéreo",

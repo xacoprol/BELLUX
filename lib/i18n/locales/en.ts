@@ -398,6 +398,7 @@ export const en: SiteContent = {
     whatsappEyebrow: "Quick reply",
     whatsappIntro: "Prefer to talk now? Choose the contact for your region.",
     whatsappCta: "Open WhatsApp",
+    whatsappFloat: "Chat on WhatsApp",
     eventTypes: [
       "Hotel entertainment",
       "Aerial show",

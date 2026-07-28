@@ -4,6 +4,7 @@ import { LanguageProvider } from "@/context/LanguageContext";
 import PageEffects from "@/components/PageEffects";
 import CookieBanner from "@/components/CookieBanner";
 import GoogleAnalytics from "@/components/GoogleAnalytics";
+import WhatsAppFloat from "@/components/WhatsAppFloat";
 import { content } from "@/lib/i18n/content";
 import { isLocale, locales } from "@/lib/i18n/routing";
 import type { Locale } from "@/lib/i18n/types";
@@ -56,6 +57,7 @@ export default async function LocaleLayout({
       <PageEffects />
       <GoogleAnalytics />
       <CookieBanner />
+      <WhatsAppFloat />
       {children}
     </LanguageProvider>
   );
