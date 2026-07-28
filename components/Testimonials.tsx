@@ -26,8 +26,6 @@ export default function Testimonials() {
           </article>
         ))}
       </div>
-
-      <p className="testimonials-note">{t.testimonials.note}</p>
     </section>
   );
 }
