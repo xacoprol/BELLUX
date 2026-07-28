@@ -9,6 +9,13 @@ type ContactBody = {
   phone?: string;
   eventType?: string;
   details?: string;
+  locale?: string;
+};
+
+const LOCALE_LABELS: Record<string, string> = {
+  pt: "Português",
+  es: "Español",
+  en: "English",
 };
 
 function trim(value: unknown, max: number) {
@@ -63,6 +70,10 @@ export async function POST(request: Request) {
   const details = String(body.details ?? "")
     .trim()
     .slice(0, 4000);
+  const localeKey = trim(body.locale, 8).toLowerCase();
+  const language =
+    LOCALE_LABELS[localeKey] ||
+    (localeKey ? localeKey.toUpperCase() : "—");
 
   if (!name || !email || !details || !isEmail(email)) {
     return NextResponse.json({ ok: false, error: "validation" }, { status: 400 });
@@ -77,28 +88,30 @@ export async function POST(request: Request) {
   });
 
   const text = [
-    "Novo pedido de contacto — Bellux Entertainment",
+    "Nova mensagem de contacto — Bellux Entertainment",
     "",
     `Nome: ${name}`,
     `Email: ${email}`,
     `Telefone: ${phone || "—"}`,
     `Tipo de evento: ${eventType || "—"}`,
+    `Idioma do formulário: ${language}`,
     "",
-    "Detalhes:",
+    "Mensagem:",
     details,
   ].join("\n");
 
   const html = `
     <div style="font-family:Arial,Helvetica,sans-serif;line-height:1.5;color:#111">
-      <h2 style="margin:0 0 12px">Novo pedido de contacto</h2>
+      <h2 style="margin:0 0 12px">Nova mensagem de contacto</h2>
       <p style="margin:0 0 16px;color:#555">Bellux Entertainment · formulário web</p>
       <table style="border-collapse:collapse;width:100%;max-width:560px">
-        <tr><td style="padding:6px 0;color:#666;width:140px">Nome</td><td style="padding:6px 0"><strong>${escapeHtml(name)}</strong></td></tr>
+        <tr><td style="padding:6px 0;color:#666;width:160px">Nome</td><td style="padding:6px 0"><strong>${escapeHtml(name)}</strong></td></tr>
         <tr><td style="padding:6px 0;color:#666">Email</td><td style="padding:6px 0"><a href="mailto:${escapeHtml(email)}">${escapeHtml(email)}</a></td></tr>
         <tr><td style="padding:6px 0;color:#666">Telefone</td><td style="padding:6px 0">${escapeHtml(phone || "—")}</td></tr>
         <tr><td style="padding:6px 0;color:#666">Tipo de evento</td><td style="padding:6px 0">${escapeHtml(eventType || "—")}</td></tr>
+        <tr><td style="padding:6px 0;color:#666">Idioma</td><td style="padding:6px 0"><strong>${escapeHtml(language)}</strong></td></tr>
       </table>
-      <p style="margin:18px 0 6px;color:#666">Detalhes</p>
+      <p style="margin:18px 0 6px;color:#666">Mensagem</p>
       <p style="margin:0;white-space:pre-wrap">${escapeHtml(details)}</p>
     </div>
   `;
@@ -108,7 +121,7 @@ export async function POST(request: Request) {
       from,
       to,
       replyTo: `${name} <${email}>`,
-      subject: `Contacto web${eventType ? ` · ${eventType}` : ""} — ${name}`,
+      subject: `Contacto web [${language}]${eventType ? ` · ${eventType}` : ""} — ${name}`,
       text,
       html,
     });

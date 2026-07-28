@@ -17,7 +17,7 @@ const whatsappContacts = [
 ];
 
 export default function Contact() {
-  const { t } = useLanguage();
+  const { locale, t } = useLanguage();
   const [open, setOpen] = useState(false);
   const [eventType, setEventType] = useState("");
   const [sent, setSent] = useState(false);
@@ -101,6 +101,7 @@ export default function Contact() {
           phone: String(data.get("phone") ?? ""),
           eventType: String(data.get("event-type") ?? eventType),
           details: String(data.get("details") ?? ""),
+          locale,
         }),
       });
 

@@ -414,9 +414,9 @@ export const en: SiteContent = {
     cta: "Get in touch",
     close: "Close",
     submitting: "Sending…",
-    successTitle: "We've received your request.",
+    successTitle: "We've received your message successfully.",
     successText:
-      "The Bellux team will get back to you soon — in Portuguese, Spanish or English.",
+      "Thanks for getting in touch. Our team will review your enquiry and get back to you as soon as possible.",
     errorText:
       "Couldn't send. Please try again or reach us on WhatsApp.",
   },

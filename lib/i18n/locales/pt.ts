@@ -415,9 +415,9 @@ export const pt: SiteContent = {
     cta: "Contactar",
     close: "Fechar",
     submitting: "A enviar…",
-    successTitle: "Recebemos o teu pedido.",
+    successTitle: "Recebemos a tua mensagem corretamente.",
     successText:
-      "A equipa Bellux responde em breve — em português, espanhol ou inglês.",
+      "Obrigado pelo contacto. A nossa equipa vai analisar o teu pedido e responder-te o mais breve possível.",
     errorText:
       "Não foi possível enviar. Tenta de novo ou contacta-nos por WhatsApp.",
   },
